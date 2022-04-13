@@ -1,13 +1,8 @@
-.. QTL_BSA-Sorghum documentation master file, created by
-   sphinx-quickstart on Wed Apr 13 10:30:05 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to QTL_BSA-Sorghum's documentation!
 ===========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
 
@@ -21,14 +16,14 @@ For more detailed instructions please read the vignette here
 For updates read the NEWS.md
 Installation
 
-You can install QTLseqr from github with:
+**You can install QTLseqr from github with**:
+**use devtools to install QTLseqr**:
 
+::
 
-# install devtools first to download packages from github
-install.packages("devtools")
-
-# use devtools to install QTLseqr
-devtools::install_github("PBGLMichaelHall/QTLseqr")
+   install devtools first to download packages from github
+   install.packages("devtools")
+   devtools::install_github("PBGLMichaelHall/QTLseqr")
 
 Note: Apart from regular package dependencies, there are some Bioconductor tools that we use as well, as such you will be prompted to install support for Bioconductor, if you haven’t already. QTLseqr makes use of C++ to make some tasks significantly faster (like counting SNPs). Because of this, in order to install QTLseqr from github you will be required to install some compiling tools (Rtools and Xcode, for Windows and Mac, respectively).
 
