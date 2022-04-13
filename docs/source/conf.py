@@ -12,7 +12,7 @@
 #
 # import os
 # import sys
-# sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('/home/michael/miniconda3/lib/python3.9/site-packages'))
 import myst_parser
 
 
