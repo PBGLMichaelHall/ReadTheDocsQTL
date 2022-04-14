@@ -159,8 +159,10 @@ Call the Parser
 Preview the CSV file
 ====================
 
-.. figure:: ..images/4.png
-   :alt: mcsv
+
+
+.. figure:: ../images/4.png
+   :alt: 
 
 
 
@@ -171,7 +173,7 @@ Invoke unique command to extract Sample names reverse comapatible to the VCF
 
    unique(VCF_TIDY$gt$Indiv)
 
-.. figure:: ..images/5.png
+.. figure:: ../images/5.png
    :alt: 
 
   
@@ -197,7 +199,7 @@ Invoke unique command to extract Sample names reverse comapatible to the VCF
        chromList = Chroms
      ) 
 
-.. figure:: ..images/6.png
+.. figure:: ../images/6.png
    :alt:
 
  
@@ -205,7 +207,7 @@ Invoke unique command to extract Sample names reverse comapatible to the VCF
 Inspect the head of the df object
 =================================
 
-.. figure:: ..images/7.png
+.. figure:: ../images/7.png
    :alt: 
 
 
@@ -218,7 +220,7 @@ Inspect the head of the df object
 
    ggsave(filename = "Depth_Histogram.png",plot=last_plot())
 
-.. figure:: ..images/8.png
+.. figure:: ../images/8.png
    :alt: 
 
 
@@ -230,7 +232,7 @@ Inspect the head of the df object
 
    ggsave(filename = "Ref_Freq_Histogram.png",plot = last_plot())
 
-.. figure:: ..images/9.png
+.. figure:: ../images/9.png
    :alt: 
 
 
@@ -243,7 +245,7 @@ refAlleleFreq = 0.20, minTotalDepth = 100, maxTotalDepth = 400,
 minSampleDepth = 40, 
 # minGQ = 0 )
 
-.. figure:: ..images/10.png
+.. figure:: ../images/10.png
    :alt: 
 
 .. code:: r
@@ -255,7 +257,7 @@ minSampleDepth = 40,
      outlierFilter = "deltaSNP",
      filterThreshold = 0.1)
 
-.. figure:: ..images/11.png
+.. figure:: ../images/11.png
    :alt: 
 
  
@@ -269,7 +271,7 @@ G’ Distribution Plot
    #In addition, Hampels outlier filter in the second argument, can also be changed to "deltaSNP"
    plotGprimeDist(SNPset = df_filt, outlierFilter = "Hampel")
 
-.. figure:: ..images/12.png
+.. figure:: ../images/12.png
    :alt: 
 
 
@@ -278,7 +280,7 @@ G’ Distribution Plot
    #We can see raw data before and after our filtering step
    plotGprimeDist_MH(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.1)
 
-.. figure:: ..images/13.png
+.. figure:: ../images/13.png
    :alt: 
 
 .. code:: r
@@ -294,7 +296,7 @@ G’ Distribution Plot
      intervals = c(95, 99)
    )
 
-.. figure:: ..images/14.png
+.. figure:: ../images/14.png
    :alt: 
 
 
@@ -306,7 +308,7 @@ Plot G Statistic Distribution
 
    hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Histogram of G Values")
 
-.. figure:: ..images/15.png
+.. figure:: ../images/15.png
    :alt:
 
 
@@ -317,7 +319,7 @@ Plot G Statistic Distribution
    plotQTLStats(SNPset = df_filt2, var = "nSNPs")
    ggsave(filename = "nSNPs.png",plot = last_plot())
 
-.. figure:: ..images/16.png
+.. figure:: ../images/16.png
    :alt: 
 
  
@@ -328,7 +330,7 @@ Plot G Statistic Distribution
    plotQTLStats(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE, q = 0.01)
    ggsave(filename = "GPrime.png",plot = last_plot())
 
-.. figure:: ..images/17.png
+.. figure:: ../images/17.png
    :alt: 
 
   
@@ -339,7 +341,7 @@ Plot G Statistic Distribution
    plotQTLStats(SNPset = df_filt2, var = "deltaSNP", plotIntervals  = TRUE)
    ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
 
-.. figure:: ..images/18.png
+.. figure:: ../images/18.png
    :alt: 
 
  
@@ -350,7 +352,7 @@ Plot G Statistic Distribution
    plotQTLStats(SNPset = df_filt2, var = "negLog10Pval",plotThreshold = TRUE,q=0.01)
    ggsave(filename = "negLog10Pval.png",plot = last_plot())
 
-.. figure:: ..images/19.png
+.. figure:: ../images/19.png
    :alt: 
 
    
@@ -361,7 +363,7 @@ Plot G Statistic Distribution
    #The reason is due to signficant QTL regions
    plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subset = c("Chr01","Chr03","Chr04","Chr06"))
 
-.. figure:: ..images/20.png
+.. figure:: ../images/20.png
    :alt:
 
 
@@ -391,7 +393,7 @@ message("Making SNP Density Plots")
 MVP.Report.Density(df[,c(1:3)], bin.size = 5000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
 
 
-.. figure:: ..images/21.png
+.. figure:: ../images/21.png
    :alt: 
 
  
@@ -406,7 +408,7 @@ Export summary CSV
 Preview the Summary QTL
 =======================
 
-.. figure:: ..images/22.png
+.. figure:: ../images/22.png
    :alt: 
 
  
@@ -417,7 +419,7 @@ Preview the Summary QTL
    #Second argument size specifes size of scalar factor on nSNPs and if you have a relatively small SNP set .001 is a good startin point otherwise set to 1
    Obs_Allele_Freq(SNPSet = df_filt, size = .001)
 
-.. figure:: ..images/23.png
+.. figure:: ../images/23.png
    :alt:
 
  
@@ -427,7 +429,7 @@ Preview the Summary QTL
    ##Use the function to investigate chromosomal region of interest
    Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "Chr04", threshold = .90)
 
-.. figure:: ..images/24.png
+.. figure:: ../images/24.png
    :alt: 
 
 .. code:: r
@@ -446,7 +448,7 @@ Preview the Summary QTL
    # We prefer for accuracy to have ns >> C >> 1
    plot(success, dbinom(success, size = 90, prob = .50), type = "h",main="Binomial Sampling from Diploid Orgainism from High Bulk",xlab="2(ns)(p1_STAR)",ylab="Density")
 
-.. figure:: ..images/25.png
+.. figure:: ../images/25.png
    :alt: 
 
 
@@ -459,7 +461,7 @@ Preview the Summary QTL
    success <- 0:76
    plot(success, dbinom(success, size = 76, prob = 0.5), type = "h",main="Binomial Sampling from Diploid Organism from Low Bulk",xlab="2(n2)(p2_STAR)",ylab="Density")
 
-.. figure:: ..images/26.png
+.. figure:: ../images/26.png
    :alt: 
 
  
@@ -492,7 +494,7 @@ Preview the Summary QTL
    #n1|p1_star ~ Poisson(lambda)
    plot(success, dpois(success, lambda = C*(1-p1_STAR)), type = 'h',main="n1|p1_STAR ~ Poisson(C[1-p1_STAR])",xlab="n1|(n3/n1+n3)",ylab="Prob")
 
-.. figure:: ..images/27.png
+.. figure:: ../images/27.png
    :alt: 
 
  
@@ -501,7 +503,7 @@ Preview the Summary QTL
 
    hist(TT$AD_REF., probability = TRUE,main="Histogram of Actually Realized n1 Values",xlab="n1")
 
-.. figure:: ..images/28.png
+.. figure:: ../images/28.png
    :alt: 
 
   
@@ -511,7 +513,7 @@ Preview the Summary QTL
    #n2|p2_star ~ Poisson(lambda)
    plot(success, dpois(success, lambda = C*(1-p2_STAR)), type='h', main="n2|p2_STAR ~ Poisson(C[[1-p2_STAR])",xlab="n2|(n4/n2+n4)",ylab="Prob")
 
-.. figure:: ..images/29.png
+.. figure:: ../images/29.png
    :alt: 
 
 
@@ -520,7 +522,7 @@ Preview the Summary QTL
 
    hist(tt$AD_REF., probability = TRUE, main = "Histogram of Actually Realized n2 Values",xlab="n2")
 
-.. figure:: ..images/30.png
+.. figure:: ../images/30.png
    :alt: 
 
  
@@ -530,7 +532,7 @@ Preview the Summary QTL
    #n3|p1_star ~ Poisson(lambda)
    plot(success, dpois(success, lambda = C*p1_STAR),type='h',main="n3|p1_STAR ~ Poisson(C[1-p1_STAR])",xlab="n3|(n3/n1+n3)",ylab="Prob")
 
-.. figure:: ..images/31.png
+.. figure:: ../images/31.png
    :alt: 
 
 
@@ -538,7 +540,7 @@ Preview the Summary QTL
 
    hist(TT$AD_ALT., probability = TRUE, main="Histogram of Acutally Realized n3 Values",xlab="n3")
 
-.. figure:: ..images/32.png
+.. figure:: ../images/32.png
    :alt:
 
 .. code:: r
@@ -546,14 +548,14 @@ Preview the Summary QTL
    #n4|p2_star ~ Poisson(lambda)
    plot(success, dpois(success, lambda = C*p2_STAR), type = 'h',main="n4|p2_STAR ~ Poisson(C[1-p2_STAR])",xlab="n4|n4/(n2+n4)",ylab="Prob")
 
-.. figure:: ..images/33.png
+.. figure:: ../images/33.png
    :alt: 
 
 .. code:: r
 
    hist(tt$AD_ALT., probability = TRUE, main="Histogram of Acutally Realized n4 Values",xlab="n4")
 
-.. figure:: ..images/34.png
+.. figure:: ../images/34.png
    :alt: 
 
   
