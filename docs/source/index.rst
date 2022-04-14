@@ -214,22 +214,16 @@ Inspect the head of the df object
 
 .. code:: r
 
-   #plot histograms associated with filtering arguments such as mamximum and minumum Total Depths and reference Allele Frequency to determine cut off     values 
-
+#plot histograms associated with filtering arguments such as mamximum and minumum Total Depths and reference Allele Frequency to determine cut off     values 
    ggplot(data =df) + geom_histogram(aes(x = DP.LOW + DP.HIGH)) + xlim(0,400)
-
    ggsave(filename = "Depth_Histogram.png",plot=last_plot())
 
 .. figure:: ../images/8.png
    :alt: 
 
-
-
 .. code:: r
 
-
    ggplot(data = df) + geom_histogram(aes(x = REF_FRQ))
-
    ggsave(filename = "Ref_Freq_Histogram.png",plot = last_plot())
 
 .. figure:: ../images/9.png
@@ -239,18 +233,18 @@ Inspect the head of the df object
 
 .. code:: r
 
-#Filter SNPs based on some criteria 
-df_filt <- filterSNPs( SNPset = df,
-refAlleleFreq = 0.20, minTotalDepth = 100, maxTotalDepth = 400,
-minSampleDepth = 40, 
-# minGQ = 0 )
+   #Filter SNPs based on some criteria 
+   df_filt <- filterSNPs( SNPset = df,
+   refAlleleFreq = 0.20, minTotalDepth = 100, maxTotalDepth = 400,
+   minSampleDepth = 40, 
+   # minGQ = 0 )
 
 .. figure:: ../images/10.png
    :alt: 
 
 .. code:: r
 
-#Run G' analysis
+   #Run G' analysis
    df_filt<-runGprimeAnalysis_MH(
      SNPset = df_filt,
      windowSize = 5000000,
@@ -373,24 +367,25 @@ Use RMVP package to view SNPs on chromosomes/contigs
 
 .. code:: r
 
+   #install.packages("rMVP")
+   library(rMVP)
+   sample<-"Semi_Dwarfism_in_Sorghum"
+   pathtosample <- "/home/michael/Desktop/QTLseqr/extdata/subset_freebayes_D2.filtered.vcf.gz"
+   out<- paste0("mvp.",sample,".vcf")
+   memo<-paste0(sample)
+   dffile<-paste0("mvp.",sample,".vcf.geno.map")
 
-sample<-"Semi_Dwarfism_in_Sorghum"
-pathtosample <- "/home/michael/Desktop/QTLseqr/extdata/subset_freebayes_D2.filtered.vcf.gz"
-out<- paste0("mvp.",sample,".vcf")
-memo<-paste0(sample)
-dffile<-paste0("mvp.",sample,".vcf.geno.map")
-
-message("Making MVP data S1")
-MVP.Data(fileVCF=pathtosample,
+   message("Making MVP data S1")
+   MVP.Data(fileVCF=pathtosample,
          #filePhe="Phenotype.txt",
          fileKin=FALSE,
          filePC=FALSE,
-         out=out
-)
-message("Reading MVP Data S1")
-df <- read.table(file = dffile, header=TRUE)
-message("Making SNP Density Plots")
-MVP.Report.Density(df[,c(1:3)], bin.size = 5000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
+         out=out)
+         
+   message("Reading MVP Data S1")
+   df <- read.table(file = dffile, header=TRUE)
+   message("Making SNP Density Plots")
+   MVP.Report.Density(df[,c(1:3)], bin.size = 5000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
 
 
 .. figure:: ../images/21.png
@@ -558,10 +553,31 @@ Preview the Summary QTL
 .. figure:: ../images/34.png
    :alt: 
 
-  
+.. code:: r
 
-#Assuming average sequencing coverage expected values for n1,n2,n3,n4
-C/2
+   #Assuming average sequencing coverage (C) expected values for n1,n2,n3,n4
+   E(n1) = E(n2) = E(n3) = E(n4) = C/2
+
+
+   # Read in the csv file from High bulk tt
+   tt<-read.table(file = "D2_F2_tt.csv",header = TRUE,sep = ",")
+   # Calculate average Coverage per SNP site
+   mean(tt$DP)
+   # Find REalized frequencies
+   p1_STAR <- sum(tt$AD_ALT.) / sum(tt$DP)
+
+   # Read in the csv file from Low Bulk TT
+   TT<-read.table(file ="D2_F2_TT.csv",header = TRUE,sep=",")
+   # Calculate average Coverage per SNP sit
+   mean(TT$DP)
+   # Find Realized frequencies
+   p2_STAR <- sum(TT$AD_ALT.) / sum(TT$DP)
+   # Take the average of the Averages
+   C <-(mean(tt$DP)+mean(TT$DP))/2
+   C<-round(C,0)
+   # Find realized frequencies
+   C
+   110
 
 p2 >> p1 QTL is present
 =======================
