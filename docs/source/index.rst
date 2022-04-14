@@ -106,18 +106,25 @@ Examples:
 Load/install libraries
 ======================
 
-\``\` r {r libraries} # install.packages(“tinytex”) #
-install.packages(“vcfR”) # install.packages(“tidyr”) #
-install.packages(“ggplot2”)
-devtools::install_github(“PBGLMichaelHall/QTLseqr”,force = TRUE)
-library(QTLseqr) library(tinytex) library(vcfR) library(tidyr)
-library(ggplot2)
+.. code:: r 
+   
+   install.packages(“tinytex”) 
+   install.packages(“vcfR”) 
+   install.packages(“tidyr”) 
+   install.packages(“ggplot2”)
+   devtools::install_github(“PBGLMichaelHall/QTLseqr”,force = TRUE)   
+   library(QTLseqr) 
+   library(tinytex) 
+   library(vcfR) 
+   library(tidyr)
+   library(ggplot2)
 
 ::
 
    # Set the Working Directory to where VCF file is stored in file system
 
-   ``` r 
+.. code:: r 
+
    setwd("/home/michael/Desktop/QTLseqr/extdata")
 
 Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only take SNPS, ie, length of REF and ALT== 1
@@ -127,10 +134,8 @@ Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcf
 
    vcf <- read.vcfR(file = "freebayes_D2.filtered.vcf")
 
-.. figure:: vertopal_3a51f92c0e3d4ee6abdbf942c924322c/69a7aa01ca2cde4201af39a38111309465617484.png
-   :alt: Screenshot from 2022-03-30 15-12-19
-
-   Screenshot from 2022-03-30 15-12-19
+.. figure:: ../images/1.png
+   :alt: 
 
 .. code:: r
 
