@@ -1,1 +1,0 @@
-# ReadTheDocsQTL_Sorghum
