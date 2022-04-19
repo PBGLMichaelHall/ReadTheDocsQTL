@@ -11,7 +11,7 @@ Analysis.
 QTLseqr is still under development and is offered with out any
 guarantee.
 
-I have forked the repository to my github account and added a generic parser in R to do the analysis. The link to a Read the Docs html is provided by me.
+I have forked the repository to my github account and added a generic parser in R to do the analysis. The link to a Read the Docs html is provided by me. OKay good.
 https://qtl.readthedocs.io/en/latest/
 
 ### **For more detailed instructions please read the vignette [here](https://github.com/bmansfeld/QTLseqr/raw/master/vignettes/QTLseqr.pdf)**
