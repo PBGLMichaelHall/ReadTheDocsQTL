@@ -6,5 +6,5 @@ We will performing a comprehensive analysis and processing of two Variant Files 
 .. toctree::
    :maxdepth: 1
 
-   Semi-Dwarfism in Sorghum Grass
-   Cold Tolerance in Rice
+   Sorghum
+   Rice
