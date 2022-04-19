@@ -745,3 +745,282 @@ Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = 8, threshold = .75)
 
 
 
+################################################################################################################################################
+
+# Rice QTL Analysis: High Bulk sample size of 430 Tolerant to cold environments and Low Bulk sample size of 385 Suseptilble to cold environments
+```r
+
+
+#Set Working Directory
+setwd("/home/michael/Desktop/RiceCold2")
+
+#vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTL-Rice-Cold functions will only take SNPS, ie, length of REF and ALT== 1
+vcf <- read.vcfR(file = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf.gz")
+
+```
+![Screenshot from 2022-04-01 09-27-24](https://user-images.githubusercontent.com/93121277/161215916-c3328eaf-721b-4778-940a-e356fe60e9ca.png)
+
+```r
+#Convert to tidy data frame
+VCF_TIDY <- vcfR2tidy(vcf)
+```
+![Screenshot from 2022-04-01 09-37-35](https://user-images.githubusercontent.com/93121277/161217479-f8a99317-1dec-4b7b-a7de-04d488abbdf0.png)
+
+```r
+#Call the Parser
+QTLParser_1_MH(vcf = VCF_TIDY, HighBulk = "ET-pool-385",LowBulk = "ES-pool-430", filename = "Hall")
+```
+# Standard Parser Output makes a list of Chromosome as named in VCF file
+![Screenshot from 2022-04-01 09-41-00](https://user-images.githubusercontent.com/93121277/161218164-169207c9-7039-4857-9066-f59f07c206b7.png)
+# Also find unique sample names reverse compatible with VCF file
+```r
+unique(VCF_TIDY$gt$Indiv)
+```
+![Screenshot from 2022-04-01 09-42-58](https://user-images.githubusercontent.com/93121277/161218336-79ca6524-e2ba-47fd-bbd8-68125bdd966b.png)
+
+```r
+#Set High bulk and Low bulk sample names and parser generated file name
+
+HighBulk <- "ET-pool-385"
+LowBulk <- "ES-pool-430"
+file <- "Hall.csv"
+```
+# Preview the CSV file
+
+![Screenshot from 2022-04-01 10-33-41](https://user-images.githubusercontent.com/93121277/161226740-5b648928-97bd-40e4-8622-e8f845bbe271.png)
+
+
+```r
+#Input chromosomes values which will be included in the analysis,
+Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1")
+
+
+
+df <-
+  importFromTable(
+    file = file,
+    highBulk = HighBulk,
+    lowBulk = LowBulk,
+    chromList = Chroms
+  ) 
+
+```
+
+![Screenshot from 2022-04-01 10-35-10](https://user-images.githubusercontent.com/93121277/161226938-8f50aa1b-27b4-4fe1-9b77-b06d14ec8b31.png)
+
+
+
+# Plot histograms associated with filtering arguments to determine if cut off values are appropriate
+
+
+
+
+```r
+
+ggplot(data =df) +geom_histogram(aes(x = DP.LOW + DP.HIGH)) + xlim(0,400)
+ggsave(filename = "Depth_Histogram.png",plot=last_plot())
+
+```
+![dplowhigh](https://user-images.githubusercontent.com/93121277/158780363-0939b60a-4a19-4104-b435-e352d715f5df.png)
+
+```r
+
+ggplot(data = df) +geom_histogram(aes(x = REF_FRQ))
+ggsave(filename = "Ref_Freq_Histogram.png",plot = last_plot())
+
+```
+
+![reffreq](https://user-images.githubusercontent.com/93121277/158780481-24a6992e-e239-41d4-9868-3b6da831e757.png)
+
+
+
+```r
+
+
+#Filter SNPs based on some criteria
+df_filt <-
+  filterSNPs(
+    SNPset = df,
+    refAlleleFreq = 0.20,
+    minTotalDepth = 100,
+    maxTotalDepth = 400,
+    minSampleDepth = 40,
+    #    minGQ = 0
+  )
+  
+  ```
+  
+  ![Screenshot from 2022-04-01 09-54-07](https://user-images.githubusercontent.com/93121277/161220139-0c079197-99db-4292-949a-cd23d0e2e7c7.png)
+
+
+```r
+#Run G' analysis
+df_filt<-runGprimeAnalysis_MH(
+  SNPset = df_filt,
+  windowSize = 1e6,
+  outlierFilter = "deltaSNP",
+  filterThreshold = 0.1)
+
+
+```
+![Screenshot from 2022-04-01 09-54-50](https://user-images.githubusercontent.com/93121277/161220373-00be3d7e-b67d-44ca-a1af-5c4670751f39.png)
+
+
+```r
+
+
+#Run QTLseq analysis
+df_filt2 <- runQTLseqAnalysis_MH(
+  SNPset = df_filt,
+  windowSize = 1e6,
+  popStruc = "F2",
+  bulkSize = c(430, 385),
+  replications = 10000,
+  intervals = c(95, 99)
+)
+
+```
+![Screenshot from 2022-04-01 09-56-09](https://user-images.githubusercontent.com/93121277/161220504-ba5f8e90-126f-4ee7-9a1d-06d5e09e6a94.png)
+
+# Plot G Statistic Distribution
+```r
+hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Histogram of G Values")
+```
+![gstat](https://user-images.githubusercontent.com/93121277/158780626-0dd9efaa-8c2b-448e-8e22-ce94a1ff6fbf.png)
+
+
+```r
+
+# G' Distribution Plot
+plotGprimeDist_MH(SNPset = df_filt2, outlierFilter = "Hampel")
+ggsave(filename = "Hampel_GPrime.png",plot = last_plot())
+
+```
+
+![gprime](https://user-images.githubusercontent.com/93121277/158780745-ce684a8b-5267-42f2-aab1-9038b66490a5.png)
+
+
+```r
+
+
+plotGprimeDist_MH(SNPset = df_filt2, outlierFilter = "deltaSNP",filterThreshold = 0.1)
+ggsave(filename = "DeltaSNP.png",plot = last_plot())
+
+```
+
+![deltaSNP](https://user-images.githubusercontent.com/93121277/158780846-58095997-5814-4440-8594-e2c560412eee.png)
+
+
+```r
+
+
+#make the Plot
+plotQTLStats(SNPset = df_filt2, var = "nSNPs")
+ggsave(filename = "nSNPs.png",plot = last_plot())
+
+
+```
+![Screenshot from 2022-04-01 10-36-37](https://user-images.githubusercontent.com/93121277/161227187-9a3d3138-e996-4965-9659-6a879d0be70a.png)
+
+
+
+```
+
+
+```r
+plotQTLStats(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE, q = 0.01)
+ggsave(filename = "GPrime.png",plot = last_plot())
+
+```
+
+![Screenshot from 2022-04-01 10-37-50](https://user-images.githubusercontent.com/93121277/161227403-aa546c4a-c6f0-4c3c-8c25-485bae654739.png)
+
+
+```r
+plotQTLStats(SNPset = df_filt2, var = "deltaSNP", plotIntervals  = TRUE)
+ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
+
+```
+![Screenshot from 2022-04-01 10-39-24](https://user-images.githubusercontent.com/93121277/161227673-447d11f9-1245-4042-affd-56ca43c39799.png)
+
+
+
+
+
+```r
+plotQTLStats(SNPset = df_filt2, var = "negLog10Pval",plotThreshold = TRUE,q=0.01,subset = c("NC_029256.1","NC_029257.1","NC_029263.1","NC_029265.1"))
+ggsave(filename = "negLog10Pval.png",plot = last_plot())
+
+```
+![Screenshot from 2022-04-01 10-05-35](https://user-images.githubusercontent.com/93121277/161222325-69f4ad58-8fb8-4eb7-bc91-fc900be47416.png)
+
+
+```r
+
+plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subset = c("NC_029256.1","NC_029257.1","NC_029263.1","NC_029265.1"))
+
+```
+![Screenshot from 2022-04-01 10-06-19](https://user-images.githubusercontent.com/93121277/161222339-dbbafc12-0631-4d22-b477-5f038256ee6e.png)
+
+# Lets take a look at SNPs per chromosome using rMVP Package
+```r
+sample<-"RiceColdTolerance"
+pathtosample <- "/home/michael/Desktop/RiceCold2/wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf"
+out<- paste0("mvp.",sample,".vcf")
+memo<-paste0(sample)
+dffile<-paste0("mvp.",sample,".vcf.geno.map")
+
+message("Making MVP data S1")
+MVP.Data(fileVCF=pathtosample,
+         #filePhe="Phenotype.txt",
+         fileKin=FALSE,
+         filePC=FALSE,
+         out=out
+)
+message("Reading MVP Data S1")
+df <- read.table(file = dffile, header=TRUE)
+message("Making SNP Density Plots")
+MVP.Report.Density(df[,c(1:3)], bin.size = 1000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
+
+```
+![Screenshot from 2022-04-12 14-34-01](https://user-images.githubusercontent.com/93121277/162963811-7fc215c6-ad65-4a01-b4b9-94aebed3e112.png)
+
+
+
+# Export summary CSV
+```r
+
+getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = "my_BSA_QTL.csv")
+```
+# Preview the QTL Summary
+![Screenshot from 2022-04-01 09-58-43](https://user-images.githubusercontent.com/93121277/161220947-979d5bbf-8438-4110-a950-a33224878a01.png)
+
+```r
+
+#Use the function to plot allele frequencies per chromosome
+Obs_Allele_Freq(SNPSet = df_filt)
+```
+
+# Looks Dense
+![LowB](https://user-images.githubusercontent.com/93121277/158788612-ebe92c64-ed0b-48f8-9ef6-f7e8d6f7bd2d.png)
+![HighB](https://user-images.githubusercontent.com/93121277/158788656-ee153e0a-1a6a-4b28-86b8-f7f218bb1287.png)
+
+
+# Filter Low Allelic Depth Frequencies
+```r
+##Use the function to investigate chromosomal region of interest
+Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = 8, threshold = .75)
+
+```
+
+# Preview the plot with idenitfied SNP positions
+![LB3](https://user-images.githubusercontent.com/93121277/158788921-b35622eb-9926-4c0b-9b6b-fd06c71dc0c2.png)
+![HB3](https://user-images.githubusercontent.com/93121277/158789001-69b463a5-56df-44f6-94a7-7d016c795833.png)
+
+# Investigate SNP@POS 24525659
+![header](https://user-images.githubusercontent.com/93121277/158789386-a163d764-607b-4a4c-8884-11ce4a9debb0.png)
+![values](https://user-images.githubusercontent.com/93121277/158789420-806f5cfe-ed44-48b7-80fa-f738eaf7a5e8.png)
+
+
+
+
