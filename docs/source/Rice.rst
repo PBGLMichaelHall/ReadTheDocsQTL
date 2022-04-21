@@ -118,6 +118,7 @@ Load/install libraries
    library(vcfR) 
    library(tidyr)
    library(ggplot2)
+   library(dplyr)
 
 ::
 
@@ -125,14 +126,14 @@ Load/install libraries
 
 .. code:: r 
 
-setwd("/home/michael/Desktop/RiceCold2")
+   setwd("/home/michael/Desktop/RiceCold2")
 
-Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only take SNPS, ie, length of REF and ALT== 1
-==================================================================================================================================================================================
+   Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only take SNPS,      ie, length of REF and ALT== 1
+   ==================================================================================================================================================================================
 
 .. code:: r
 
-vcf <- read.vcfR(file = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf.gz"
+   vcf <- read.vcfR(file = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf.gz"
 
 .. figure:: ../images/63.png
    :alt: 
@@ -149,7 +150,7 @@ Call the Parser
 
 .. code:: r
 
-   QTLParser_1_MH(vcf = VCF_TIDY, HighBulk = "D2_F2_tt",LowBulk = "D2_F2_TT", filename = Hall)
+   QTLParser_1_MH(vcf = VCF_TIDY, HighBulk = "ET-pool-385",LowBulk = "ES-pool-430", filename = Hall)
 
 .. figure:: ../images/64.png
    :alt: 
@@ -189,7 +190,7 @@ Invoke unique command to extract Sample names reverse comapatible to the VCF
 
 .. code:: r
 
-#plot histograms associated with filtering arguments such as mamximum and minumum Total Depths and reference Allele Frequency to determine cut off     values 
+   #plot histograms associated with filtering arguments such as mamximum and minumum Total Depths and reference Allele Frequency to determine cut off        values 
    ggplot(data =df) + geom_histogram(aes(x = DP.LOW + DP.HIGH)) + xlim(0,400)
    ggsave(filename = "Depth_Histogram.png",plot=last_plot())
 
@@ -393,23 +394,16 @@ Preview the Summary QTL
 
    #Use the function to plot allele frequencies per chromosome
    #Second argument size specifes size of scalar factor on nSNPs and if you have a relatively small SNP set .001 is a good startin point otherwise set to 1
-   Obs_Allele_Freq(SNPSet = df_filt)
+   ##Use the function to investigate chromosomal region of interest
+   Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "NC_029263.1", threshold = .85)
 
 .. figure:: ../images/80.png
    :alt:
    
-.. figure:: ../images/81.png
+.. figure:: ../images/233.png
    :alt:
 
- 
 
-.. code:: r
-
-   ##Use the function to investigate chromosomal region of interest
-   Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "Chr04", threshold = .90)
-
-.. figure:: ../images/82.png
-   :alt: 
 
 .. code:: r
 
@@ -426,9 +420,9 @@ Preview the Summary QTL
    # Expected Frequencies:
    # E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 110
    # We prefer for accuracy to have ns >> C >> 1
-   plot(success, dbinom(success, size = 770, prob = .50), type = "h",main="Binomial Sampling from Diploid Orgainism from High Bulk",xlab="2(ns)(p1_STAR)",ylab="Density")
+   plot(success, dbinom(success, size = 770, prob = .50), type = "h",main="Binomial Sampling from Diploid Orgainism from Low Bulk",xlab="2(ns)(   p1_STAR)",ylab="Density")
 
-.. figure:: ../images/83.png
+.. figure:: ../images/LB.png
    :alt: 
 
 
@@ -439,9 +433,9 @@ Preview the Summary QTL
    # 2(ns)p2_star ~ Binomial(2(ns),p2)
    # p2 Expected Frequencies
    success <- 0:860
-   plot(success, dbinom(success, size = 860, prob = 0.5), type = "h",main="Binomial Sampling from Diploid Organism from Low Bulk",xlab="2(n2)(p2_STAR)",ylab="Density")
+   plot(success, dbinom(success, size = 860, prob = 0.5), type = "h",main="Binomial Sampling from Diploid Organism from High Bulk",xlab="2(n2)(p2_STAR)",ylab="Density")
 
-.. figure:: ../images/84.png
+.. figure:: ../images/HB.png
    :alt: 
 
  
@@ -463,10 +457,10 @@ Preview the Summary QTL
 
 .. code:: r
 
-# Filter outliers
-TT <- TT %>% filter(AD_REF. <= 500)
+   # Filter outliers
+   TT <- TT %>% filter(AD_REF. <= 500)
 
-hist(TT$AD_REF., probability = FALSE,main="Histogram of Actually Realized n1 Values",xlab="n1",breaks = "Sturges")
+   hist(TT$AD_REF., probability = FALSE,main="Histogram of Actually Realized n1 Values",xlab="n1",breaks = "Sturges")
 
 
 
@@ -487,8 +481,8 @@ hist(TT$AD_REF., probability = FALSE,main="Histogram of Actually Realized n1 Val
 
 .. code:: r
 
-tt <- tt %>% filter(AD_REF. <= 500)
-hist(tt$AD_REF., probability = TRUE, main = "Histogram of Actually Realized n2 Values",xlab="n2")
+   tt <- tt %>% filter(AD_REF. <= 500)
+   hist(tt$AD_REF., probability = TRUE, main = "Histogram of Actually Realized n2 Values",xlab="n2")
 
 .. figure:: ../images/59.png
    :alt: 
@@ -534,36 +528,33 @@ hist(TT$AD_ALT., probability = TRUE, main="Histogram of Acutally Realized n3 Val
    #Assuming average sequencing coverage (C) expected values for n1,n2,n3,n4
    E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 35
 
+   # Read in the csv file from High bulk tt
+   tt<-read.table(file = "ET-pool-385.csv",header = TRUE,sep = ",")
+   # Calculate average Coverage per SNP site
+   mean(tt$DP)
+   # Find REalized frequencies
+   p1_STAR <- sum(tt$AD_ALT.) / sum(tt$DP)
+
+   # Read in the csv file from Low Bulk TT
+   TT<-read.table(file ="ES-pool-430.csv",header = TRUE,sep=",")
+   # Calculate average Coverage per SNP sit
+   mean(TT$DP)
+   # Find Realized frequencies
+   p2_STAR <- sum(TT$AD_ALT.) / sum(TT$DP)
+   # Take the average of the Averages
+   C <-(mean(tt$DP)+mean(TT$DP))/2
+   C<-round(C,0)
+   #Average Coverage
+   70
+   C/2 = 35
 
 
 
-# Read in the csv file from High bulk tt
-tt<-read.table(file = "ET-pool-385.csv",header = TRUE,sep = ",")
-# Calculate average Coverage per SNP site
-mean(tt$DP)
-# Find REalized frequencies
-p1_STAR <- sum(tt$AD_ALT.) / sum(tt$DP)
+   p2 >> p1 QTL is present
+   =======================
 
-# Read in the csv file from Low Bulk TT
-TT<-read.table(file ="ES-pool-430.csv",header = TRUE,sep=",")
-# Calculate average Coverage per SNP sit
-mean(TT$DP)
-# Find Realized frequencies
-p2_STAR <- sum(TT$AD_ALT.) / sum(TT$DP)
-# Take the average of the Averages
-C <-(mean(tt$DP)+mean(TT$DP))/2
-C<-round(C,0)
-#Average Coverage
-70
-C/2 = 35
-
-
-
-p2 >> p1 QTL is present
-=======================
-
-However, ns >> C >> 1 is TRUE 
-=================================
+   However, ns >> C >> 1 is TRUE 
+   =================================
 
 
 
