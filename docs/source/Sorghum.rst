@@ -433,7 +433,7 @@ Preview the Summary QTL
 
 
    # Read in the csv file from High bulk tt
-   tt<-read.table(file = "D2_F2_tt",header = TRUE,sep = ",")
+   tt<-read.table(file = "D2_F2_tt.csv",header = TRUE,sep = ",")
    # Calculate average Coverage per SNP site
    mean(tt$DP)
    # Find REalized frequencies
@@ -450,8 +450,9 @@ Preview the Summary QTL
    C<-round(C,0)
    # Find realized frequencies
    C
-   87
-   E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 44
+   110
+   
+   E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 55
 
    p2 >> p1 QTL is present
 
@@ -492,23 +493,7 @@ Preview the Summary QTL
 
 
 
-   # Read in the csv file from High bulk tt
-   tt<-read.table(file = "D2_F2_tt.csv",header = TRUE,sep = ",")
-   # Calculate average Coverage per SNP site
-   mean(tt$DP)
-   # Find REalized frequencies
-   p1_STAR <- sum(tt$AD_ALT.) / sum(tt$DP)
 
-   # Read in the csv file from Low Bulk TT
-   TT<-read.table(file ="D2_F2_TT.csv",header = TRUE,sep=",")
-   # Calculate average Coverage per SNP sit
-   mean(TT$DP)
-   # Find Realized frequencies
-   p2_STAR <- sum(TT$AD_ALT.) / sum(TT$DP)
-   # Take the average of the Averages
-   C <-(mean(tt$DP)+mean(TT$DP))/2
-   C<-round(C,0)
-   # Find realized frequencies
 
    par(mfrow=c(1,1))
    #Define Ranges of Success (Allele Frequencies High and Low)
