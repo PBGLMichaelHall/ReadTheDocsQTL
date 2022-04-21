@@ -214,7 +214,7 @@ Inspect the head of the df object
 
 .. code:: r
 
-#plot histograms associated with filtering arguments such as mamximum and minumum Total Depths and reference Allele Frequency to determine cut off     values 
+   #plot histograms associated with filtering arguments such as mamximum and minumum Total Depths and reference Allele Frequency to determine cut off        values 
    ggplot(data =df) + geom_histogram(aes(x = DP.LOW + DP.HIGH)) + xlim(0,400)
    ggsave(filename = "Depth_Histogram.png",plot=last_plot())
 
@@ -429,20 +429,18 @@ Preview the Summary QTL
 
 .. code:: r
 
-   #Set the working directory to where CSV files are located
-   #Assuming average sequencing coverage (C) expected values for n1,n2,n3,n4
    E(n1) = E(n2) = E(n3) = E(n4) = C/2
 
 
    # Read in the csv file from High bulk tt
-   tt<-read.table(file = "ET-pool-385.csv",header = TRUE,sep = ",")
+   tt<-read.table(file = "D2_F2_tt",header = TRUE,sep = ",")
    # Calculate average Coverage per SNP site
    mean(tt$DP)
    # Find REalized frequencies
    p1_STAR <- sum(tt$AD_ALT.) / sum(tt$DP)
 
    # Read in the csv file from Low Bulk TT
-   TT<-read.table(file ="ES-pool-430.csv",header = TRUE,sep=",")
+   TT<-read.table(file ="D2_F2_TT.csv",header = TRUE,sep=",")
    # Calculate average Coverage per SNP sit
    mean(TT$DP)
    # Find Realized frequencies
@@ -452,14 +450,10 @@ Preview the Summary QTL
    C<-round(C,0)
    # Find realized frequencies
    C
-   70
-   E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 35
-   
-   p2 >> p1 QTL is present
-=======================
+   87
+   E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 44
 
-However, ns >> C >> 1 TRUE
-=================================
+   p2 >> p1 QTL is present
 
 
    
