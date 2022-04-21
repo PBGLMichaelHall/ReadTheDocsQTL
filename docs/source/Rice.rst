@@ -450,7 +450,7 @@ Preview the Summary QTL
    #n1|p1_star ~ Poisson(lambda)
    plot(success, dpois(success, lambda = C*(1-p1_STAR)), type = 'h',main="n1|p1_STAR ~ Poisson(C[1-p1_STAR])",xlab="n1|(n3/n1+n3)",ylab="Prob")
 
-.. figure:: ../images/85.png
+.. figure:: ../images/59.png
    :alt: 
 
  
@@ -474,7 +474,7 @@ Preview the Summary QTL
    #n2|p2_star ~ Poisson(lambda)
    plot(success, dpois(success, lambda = C*(1-p2_STAR)), type='h', main="n2|p2_STAR ~ Poisson(C[[1-p2_STAR])",xlab="n2|(n4/n2+n4)",ylab="Prob")
 
-.. figure:: ../images/233.png
+.. figure:: ../images/85.png
    :alt: 
 
 
@@ -484,7 +484,7 @@ Preview the Summary QTL
    tt <- tt %>% filter(AD_REF. <= 500)
    hist(tt$AD_REF., probability = TRUE, main = "Histogram of Actually Realized n2 Values",xlab="n2")
 
-.. figure:: ../images/59.png
+.. figure:: ../images/86.png
    :alt: 
 
  
@@ -501,11 +501,11 @@ Preview the Summary QTL
 .. code:: r
 
 
-TT <- TT %>% filter(AD_ALT. <= 300)
-hist(TT$AD_ALT., probability = TRUE, main="Histogram of Acutally Realized n3 Values",xlab="n3")
+   TT <- TT %>% filter(AD_ALT. <= 300)
+   hist(TT$AD_ALT., probability = TRUE, main="Histogram of Acutally Realized n3 Values",xlab="n3")
 
 
-.. figure:: ../images/61.png
+.. figure:: ../images/60.png
    :alt:
 
 .. code:: r
@@ -520,7 +520,7 @@ hist(TT$AD_ALT., probability = TRUE, main="Histogram of Acutally Realized n3 Val
 
    hist(tt$AD_ALT., probability = TRUE, main="Histogram of Acutally Realized n4 Values",xlab="n4")
 
-.. figure:: ../images/63.png
+.. figure:: ../images/62.png
    :alt: 
 
 .. code:: r
