@@ -450,7 +450,7 @@ Preview the Summary QTL
    #n1|p1_star ~ Poisson(lambda)
    plot(success, dpois(success, lambda = C*(1-p1_STAR)), type = 'h',main="n1|p1_STAR ~ Poisson(C[1-p1_STAR])",xlab="n1|(n3/n1+n3)",ylab="Prob")
 
-.. figure:: ../images/59.png
+.. figure:: ../images/n1Gp1.png
    :alt: 
 
  
