@@ -429,7 +429,40 @@ Preview the Summary QTL
 
 .. code:: r
 
-   setwd("/home/michael/Desktop/QTLseqr/extdata")
+   #Set the working directory to where CSV files are located
+   #Assuming average sequencing coverage (C) expected values for n1,n2,n3,n4
+   E(n1) = E(n2) = E(n3) = E(n4) = C/2
+
+
+   # Read in the csv file from High bulk tt
+   tt<-read.table(file = "ET-pool-385.csv",header = TRUE,sep = ",")
+   # Calculate average Coverage per SNP site
+   mean(tt$DP)
+   # Find REalized frequencies
+   p1_STAR <- sum(tt$AD_ALT.) / sum(tt$DP)
+
+   # Read in the csv file from Low Bulk TT
+   TT<-read.table(file ="ES-pool-430.csv",header = TRUE,sep=",")
+   # Calculate average Coverage per SNP sit
+   mean(TT$DP)
+   # Find Realized frequencies
+   p2_STAR <- sum(TT$AD_ALT.) / sum(TT$DP)
+   # Take the average of the Averages
+   C <-(mean(tt$DP)+mean(TT$DP))/2
+   C<-round(C,0)
+   # Find realized frequencies
+   C
+   70
+   E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 35
+   
+   p2 >> p1 QTL is present
+=======================
+
+However, ns >> C >> 1 TRUE
+=================================
+
+
+   
    # Theory and Analytical Framework of Sampling from BSA
    par(mfrow=c(1,1))
    # Define Ranges of Success
@@ -557,33 +590,6 @@ Preview the Summary QTL
 
    #Assuming average sequencing coverage (C) expected values for n1,n2,n3,n4
    E(n1) = E(n2) = E(n3) = E(n4) = C/2
-
-
-   # Read in the csv file from High bulk tt
-   tt<-read.table(file = "D2_F2_tt.csv",header = TRUE,sep = ",")
-   # Calculate average Coverage per SNP site
-   mean(tt$DP)
-   # Find REalized frequencies
-   p1_STAR <- sum(tt$AD_ALT.) / sum(tt$DP)
-
-   # Read in the csv file from Low Bulk TT
-   TT<-read.table(file ="D2_F2_TT.csv",header = TRUE,sep=",")
-   # Calculate average Coverage per SNP sit
-   mean(TT$DP)
-   # Find Realized frequencies
-   p2_STAR <- sum(TT$AD_ALT.) / sum(TT$DP)
-   # Take the average of the Averages
-   C <-(mean(tt$DP)+mean(TT$DP))/2
-   C<-round(C,0)
-   # Find realized frequencies
-   C
-   110
-
-p2 >> p1 QTL is present
-=======================
-
-However, ns >> C >> 1 is NOT TRUE
-=================================
 
 
 
