@@ -1,6 +1,6 @@
-===============
-QTL_BSA-Sorghum
-===============
+======================
+QTL_BSA_Crop_Varieties
+======================
 
 :Author: Michael Hall
 :Date:   4/13/2022
@@ -53,6 +53,12 @@ You can install QTLseqr from github with:
    # use devtools to install QTLseqr
    devtools::install_github("PBGLMichaelHall/QTLseqr")
 
+
+
+
+Package Dependencies
+--------------------
+
 **Note:** Apart from regular package dependencies, there are some
 Bioconductor tools that we use as well, as such you will be prompted to
 install support for Bioconductor, if you haven’t already. QTLseqr makes
@@ -60,6 +66,10 @@ use of C++ to make some tasks significantly faster (like counting SNPs).
 Because of this, in order to install QTLseqr from github you will be
 required to install some compiling tools (Rtools and Xcode, for Windows
 and Mac, respectively).
+
+
+Citation
+========
 
 **If you use QTLseqr in published research, please cite:**
 
@@ -104,7 +114,7 @@ Examples:
 =========
 
 Load/install libraries
-======================
+----------------------
 
 .. code:: r 
    
@@ -121,14 +131,27 @@ Load/install libraries
 
 ::
 
-   # Set the Working Directory to where VCF file is stored in file system
+Set the Working Directory
+-------------------------
+   
 
 .. code:: r 
 
    setwd("/home/michael/Desktop/QTLseqr/extdata")
 
-Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only take SNPS, ie, length of REF and ALT== 1
-==================================================================================================================================================================================
+Pre-Filtering Rules
+===================
+
+.. code:: r
+
+   Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only take    SNPS, ie, length of REF and ALT== 1
+
+Importing Data
+==============
+
+
+Read Data
+----------
 
 .. code:: r
 
@@ -136,6 +159,9 @@ Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcf
 
 .. figure:: ../images/1.png
    :alt: 
+
+Convert Data
+------------
 
 .. code:: r
 
@@ -157,7 +183,7 @@ Call the Parser
    :alt: 
 
 Preview the CSV file
-====================
+--------------------
 
 
 
@@ -167,7 +193,7 @@ Preview the CSV file
 
 
 Invoke unique command to extract Sample names reverse comapatible to the VCF
-============================================================================
+----------------------------------------------------------------------------
 
 .. code:: r
 
@@ -176,7 +202,8 @@ Invoke unique command to extract Sample names reverse comapatible to the VCF
 .. figure:: ../images/5.png
    :alt: 
 
-  
+Input Fields
+============
 
 .. code:: r
 
@@ -191,6 +218,12 @@ Invoke unique command to extract Sample names reverse comapatible to the VCF
 
    Chroms <- c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10")
 
+
+importFromTable
+===============
+
+.. code:: r
+
    df <-
      importFromTable(
        file = file,
@@ -204,12 +237,15 @@ Invoke unique command to extract Sample names reverse comapatible to the VCF
 
  
 
-Inspect the head of the df object
-=================================
+Inspect Header
+--------------
 
 .. figure:: ../images/7.png
    :alt: 
 
+
+Histograms
+----------
 
 
 .. code:: r
@@ -242,6 +278,10 @@ Inspect the head of the df object
 .. figure:: ../images/10.png
    :alt: 
 
+
+runGprimeAnalysis_MH
+====================
+
 .. code:: r
 
    #Run G' analysis
@@ -256,8 +296,8 @@ Inspect the head of the df object
 
  
 
-G’ Distribution Plot
-====================
+plotGprimeDist_MH
+==================
 
 .. code:: r
 
@@ -277,6 +317,9 @@ G’ Distribution Plot
 .. figure:: ../images/13.png
    :alt: 
 
+runQTLseqAnalysis_MH
+====================
+
 .. code:: r
    
 
@@ -295,8 +338,8 @@ G’ Distribution Plot
 
 
 
-Plot G Statistic Distribution
-=============================
+Plot G Statistic Distribution as a Histogram
+--------------------------------------------
 
 .. code:: r
 
@@ -305,7 +348,12 @@ Plot G Statistic Distribution
 .. figure:: ../images/15.png
    :alt:
 
+plotQTLStats
+============
 
+
+nSNPs
+-----
 
 .. code:: r
 
@@ -317,6 +365,8 @@ Plot G Statistic Distribution
    :alt: 
 
  
+Gprime
+------
 
 .. code:: r
 
@@ -327,7 +377,8 @@ Plot G Statistic Distribution
 .. figure:: ../images/17.png
    :alt: 
 
-  
+deltaSNP
+--------
 
 .. code:: r
 
@@ -338,7 +389,8 @@ Plot G Statistic Distribution
 .. figure:: ../images/18.png
    :alt: 
 
- 
+negLog10Pval
+------------
 
 .. code:: r
 
@@ -350,6 +402,8 @@ Plot G Statistic Distribution
    :alt: 
 
    
+Gprime Subset
+-------------
 
 .. code:: r
 
@@ -362,8 +416,8 @@ Plot G Statistic Distribution
 
 
 
-Use RMVP package to view SNPs on chromosomes/contigs
-====================================================
+rMVP Package
+===========
 
 .. code:: r
 
@@ -401,12 +455,14 @@ Export summary CSV
    QTLTable(SNPset = df_filt, alpha = 0.01, export = TRUE, fileName = "my_BSA_QTL.csv")
 
 Preview the Summary QTL
-=======================
+-----------------------
 
 .. figure:: ../images/22.png
    :alt: 
 
  
+Obs_Allel_Freq
+==============
 
 .. code:: r
 
@@ -417,7 +473,8 @@ Preview the Summary QTL
 .. figure:: ../images/23.png
    :alt:
 
- 
+Obs_Allele_Freq2
+================
 
 .. code:: r
 
@@ -427,6 +484,20 @@ Preview the Summary QTL
 .. figure:: ../images/24.png
    :alt: 
 
+
+Theory
+======
+
+
+Contigency Table
+----------------
+
+.. figure:: ../images/contingency.png
+   :alt: 
+
+Total Coverage and Expected Allelic Frequencies
+-----------------------------------------------
+
 .. code:: r
 
    E(n1) = E(n2) = E(n3) = E(n4) = C/2
@@ -434,21 +505,26 @@ Preview the Summary QTL
 
    # Read in the csv file from High bulk tt
    tt<-read.table(file = "D2_F2_tt.csv",header = TRUE,sep = ",")
+   
    # Calculate average Coverage per SNP site
    mean(tt$DP)
+   
    # Find REalized frequencies
    p1_STAR <- sum(tt$AD_ALT.) / sum(tt$DP)
 
    # Read in the csv file from Low Bulk TT
    TT<-read.table(file ="D2_F2_TT.csv",header = TRUE,sep=",")
+   
    # Calculate average Coverage per SNP sit
    mean(TT$DP)
+   
    # Find Realized frequencies
    p2_STAR <- sum(TT$AD_ALT.) / sum(TT$DP)
+   
    # Take the average of the Averages
    C <-(mean(tt$DP)+mean(TT$DP))/2
    C<-round(C,0)
-   # Find realized frequencies
+
    C
    110
    
@@ -458,22 +534,46 @@ Preview the Summary QTL
 
 
    
-   # Theory and Analytical Framework of Sampling from BSA
+Theory and Analytical Framework of Sampling from BSA
+====================================================
+   
+
+   
+Binomial Sampling
+-----------------
+   
+High Bulk
+---------
+   
+   
    par(mfrow=c(1,1))
    # Define Ranges of Success
    success <- 0:90
+   
    # The Difference between realized and Expected Frequencies 
+   
    # ns : Sample Size taken from Low Bulk
+   
    # 2(ns)p1_star ~ Binomial(2(ns),p1)
+   
    # p1 Expected Frequencies
+   
    # Expected Frequencies:
+   
    # E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 110
+   
+   
    # We prefer for accuracy to have ns >> C >> 1
+  
+   #However, it is not true in this case.
+   
    plot(success, dbinom(success, size = 90, prob = .50), type = "h",main="Binomial Sampling from Diploid Orgainism from High Bulk",xlab="2(ns)(p1_STAR)",ylab="Density")
 
 .. figure:: ../images/25.png
    :alt: 
 
+Low Bulk
+--------
 
 .. code:: r
 
@@ -488,12 +588,10 @@ Preview the Summary QTL
    :alt: 
 
  
+Conditional Distribution of n1 given realized average frequency
+---------------------------------------------------------------
 
 .. code:: r
-
-
-
-
 
    par(mfrow=c(1,1))
    #Define Ranges of Success (Allele Frequencies High and Low)
@@ -504,7 +602,8 @@ Preview the Summary QTL
 .. figure:: ../images/27.png
    :alt: 
 
- 
+Observed n1
+-----------
 
 .. code:: r
 
@@ -513,7 +612,8 @@ Preview the Summary QTL
 .. figure:: ../images/28.png
    :alt: 
 
-  
+Conditional Distribution of n2 given realized average frequency
+---------------------------------------------------------------
 
 .. code:: r
 
@@ -523,7 +623,8 @@ Preview the Summary QTL
 .. figure:: ../images/29.png
    :alt: 
 
-
+Observed n2
+-----------
 
 .. code:: r
 
@@ -532,7 +633,8 @@ Preview the Summary QTL
 .. figure:: ../images/30.png
    :alt: 
 
- 
+Conditional Distribution of n3 given realized average frequency
+--------------------------------------------------------------- 
 
 .. code:: r
 
@@ -542,6 +644,8 @@ Preview the Summary QTL
 .. figure:: ../images/31.png
    :alt: 
 
+Observed n3
+-----------
 
 .. code:: r
 
@@ -549,6 +653,9 @@ Preview the Summary QTL
 
 .. figure:: ../images/32.png
    :alt:
+
+Conditional Distribution of n4 given realized average frequency
+--------------------------------------------------------------- 
 
 .. code:: r
 
@@ -558,19 +665,15 @@ Preview the Summary QTL
 .. figure:: ../images/n4Gp2.png
    :alt: 
 
+Observed n4
+-----------
+
 .. code:: r
 
    hist(tt$AD_ALT., probability = TRUE, main="Histogram of Acutally Realized n4 Values",xlab="n4")
 
 .. figure:: ../images/34.png
    :alt: 
-
-.. code:: r
-
-   #Assuming average sequencing coverage (C) expected values for n1,n2,n3,n4
-   E(n1) = E(n2) = E(n3) = E(n4) = C/2
-
-
 
 
 
