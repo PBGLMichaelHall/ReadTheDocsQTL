@@ -492,8 +492,11 @@ Theory
 Contigency Table
 ----------------
 
+
+
 .. figure:: ../images/contingency.png
    :alt: 
+
 
 Total Coverage and Expected Allelic Frequencies
 -----------------------------------------------
