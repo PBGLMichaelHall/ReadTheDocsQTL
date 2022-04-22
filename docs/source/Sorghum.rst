@@ -265,7 +265,8 @@ Histograms
 .. figure:: ../images/9.png
    :alt: 
 
-
+filterSNPs
+==========
 
 .. code:: r
 
