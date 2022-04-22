@@ -417,7 +417,10 @@ Gprime Subset
 
 
 rMVP Package
-===========
+============
+
+SNP Densities
+--------------
 
 .. code:: r
 
@@ -460,29 +463,6 @@ Preview the Summary QTL
 .. figure:: ../images/22.png
    :alt: 
 
- 
-Obs_Allel_Freq
-==============
-
-.. code:: r
-
-   #Use the function to plot allele frequencies per chromosome
-   #Second argument size specifes size of scalar factor on nSNPs and if you have a relatively small SNP set .001 is a good startin point otherwise set to 1
-   Obs_Allele_Freq(SNPSet = df_filt, size = .001)
-
-.. figure:: ../images/23.png
-   :alt:
-
-Obs_Allele_Freq2
-================
-
-.. code:: r
-
-   ##Use the function to investigate chromosomal region of interest
-   Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "Chr04", threshold = .90)
-
-.. figure:: ../images/24.png
-   :alt: 
 
 
 Theory
@@ -495,6 +475,32 @@ Contigency Table
 
 
 .. figure:: ../images/contingency.png
+   :alt: 
+
+
+ 
+Obs_Allel_Freq
+--------------
+
+.. code:: r
+
+   #Use the function to plot allele frequencies per chromosome
+   #Second argument size specifes size of scalar factor on nSNPs and if you have a relatively small SNP set .001 is a good startin point otherwise set to 1
+   Obs_Allele_Freq(SNPSet = df_filt, size = .001)
+
+.. figure:: ../images/23.png
+   :alt:
+   
+   
+Obs_Allele_Freq2
+----------------
+
+.. code:: r
+
+   ##Use the function to investigate chromosomal region of interest
+   Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "Chr04", threshold = .90)
+
+.. figure:: ../images/24.png
    :alt: 
 
 
