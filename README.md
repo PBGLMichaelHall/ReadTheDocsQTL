@@ -11,7 +11,7 @@ Analysis.
 QTLseqr is still under development and is offered with out any
 guarantee.
 
-# I have forked the repository to my github account and added a generic parser in R to do a Quantitative Trait Locus Bulk Segregant analysis. The hyperlink to Read the Docs is provided below. The reason I forked his repository is because the analysis was limited to GATK parsed vcf files. To make it more robust I added a generic R Parser that does a similar parsing. The parser function takes 4 arguments, a VCF Tidy Data frame which first was a VCF file then read by read.vcfR from vcfR package and finally converted to VCF Tidy Data Frame by vcfR2tidy function in vcfR package. The second and third arguments are the respective names given for High Bulk Sample and Low Bulk Sample which is reverse compatible with original vcf file. Lastly, the fourth and final argument is a user specified file name given to CSV input file used at the beginning of downstream analysis utilitzing importFromTable Function.
+I have forked the repository to my github account and added a generic parser in R to do a Quantitative Trait Locus Bulk Segregant analysis. The hyperlink to Read the Docs is provided below. The reason I forked his repository is because the analysis was limited to GATK parsed vcf files. To make it more robust I added a generic R Parser that does a similar parsing. The parser function takes 4 arguments, a VCF Tidy Data frame which first was a VCF file then read by read.vcfR from vcfR package and finally converted to VCF Tidy Data Frame by vcfR2tidy function in vcfR package. The second and third arguments are the respective names given for High Bulk Sample and Low Bulk Sample which is reverse compatible with original vcf file. Lastly, the fourth and final argument is a user specified file name given to CSV input file used at the beginning of downstream analysis utilitzing importFromTable Function.
 
 ########################################################################################################################################################
 
@@ -36,13 +36,13 @@ In this function I use getPvals_MH which is a modification of getPvals. The modi
 
 # getPvals_MH
 I added the following line of code to remove any unwanted NA values which without being remove would generate an error. 
-# trimGprime <- trimGprime[!is.na(trimGprime)]
+trimGprime <- trimGprime[!is.na(trimGprime)]
 This modification is on line 231 of my source code Functions_MH.R.
 It is also used in runGprimeAnalysis_MH to minimize the chances of generating an error whether by accident or coincidentally. 
 
 
 # tricube_Smooth 
-# Uses Local Regression, Likelihood and Density Estimation and a Local Polynomial Model Term
+Uses Local Regression, Likelihood and Density Estimation and a Local Polynomial Model Term
 stats::predict(locfit::locfit(Stat~locfit::lp(POS, h = windowsize, deg= deg, nn=nn)),POS) where Stat is G Statistic. This allows the user to choose optimal parameter values to smooth the model basd on degree of polynomial deg or Nearest neighbor component of the smoothing parameter. Default value is 0.7.
 
 
