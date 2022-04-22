@@ -4,14 +4,16 @@ author: "Michael Hall"
 date: "4/13/2022"
 output: html_document
 ---
-# QTLSorghum
+# Semi Dwarfism in Sorghum Mutant Lines 
 QTLseqr is an R package for QTL mapping using NGS Bulk Segregant
 Analysis.
 
 QTLseqr is still under development and is offered with out any
 guarantee.
 
-I have forked the repository to my github account and added a generic parser in R to do the analysis. The link to a Read the Docs html is provided by me. OKay good.
+# I have forked the repository to my github account and added a generic parser in R to do a Quantitative Trait Locus Bulk Segregant analysis. The hyperlink to Read the Docs is provided below. The reason I forked his repository is because the analysis was limited to GATK parsed vcf files. To make it more robust I added a generic R Parser that does a similar parsing. The parser function takes 4 arguments, a VCF Tidy Data frame which first was a VCF file then read by read.vcfR from vcfR package and finally converted to VCF Tidy Data Frame by vcfR2tidy function in vcfR package. The second and third arguments are the respective names given for High Bulk Sample and Low Bulk Sample which is reverse compatible with original vcf file. Lastly, the fourth and final argument is a user specified file name given to CSV input file used at the beginning of downstream analysis utilitzing importFromTable Function.
+
+
 https://qtl-bsa.readthedocs.io/en/latest/Sorghum.html
 
 ### **For more detailed instructions please read the vignette [here](https://github.com/bmansfeld/QTLseqr/raw/master/vignettes/QTLseqr.pdf)**
