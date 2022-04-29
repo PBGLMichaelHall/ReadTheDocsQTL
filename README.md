@@ -143,37 +143,13 @@ library(ggplot2)
 setwd("/home/michael/Desktop/QTLseqr/extdata")
 ```
 # Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only take SNPS, ie, length of REF and ALT== 1
-```r
-vcf <- read.vcfR(file = "freebayes_D2.filtered.vcf")
-```
-
-
-![Screenshot from 2022-03-30 15-12-19](https://user-images.githubusercontent.com/93121277/160842876-d35bcbdf-c487-42ad-ac92-01f98f436eea.png)
 
 ```r
+# Invoke importFromVCF function and produce a .CSV file
 
-#Convert to tidy data frame
-VCF_TIDY <- vcfR2tidy(vcf)
+importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",lowBulk = "D2_F2_TT",chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10"),filename = "Hall")
+
 ```
-
-![Screenshot from 2022-03-30 15-18-37](https://user-images.githubusercontent.com/93121277/160843944-e37e77e9-acb4-401f-95eb-f75f894e953f.png)
-
-# Call the Parser
-```r
-QTLParser_1_MH(vcf = VCF_TIDY, HighBulk = "D2_F2_tt",LowBulk = "D2_F2_TT", filename = Hall)
-```
-![Screenshot from 2022-03-30 15-10-38](https://user-images.githubusercontent.com/93121277/160842389-5d1d3915-c652-4fa4-a0a4-2829d04ad9a0.png)
-
-
-# Preview the CSV file
-![mcsv](https://user-images.githubusercontent.com/93121277/158783968-db377510-7852-4359-a48f-afb34b8efb5a.png)
-
-# Invoke unique command to extract Sample names reverse comapatible to the VCF
-
-```r
-unique(VCF_TIDY$gt$Indiv)
-```
-![Screenshot from 2022-03-30 15-33-29](https://user-images.githubusercontent.com/93121277/160846874-b44284ed-9eb5-44a7-9ef0-65a5819e182e.png)
 
 
 
@@ -194,7 +170,7 @@ df <-
     file = file,
     highBulk = HighBulk,
     lowBulk = LowBulk,
-    chromList = Chroms
+    chromList = chromList
   ) 
 
 ```
