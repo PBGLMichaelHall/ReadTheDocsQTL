@@ -125,12 +125,12 @@ log10(p-values), enabling identification and plotting of QTL.
 
 
 ``` r {r libraries}
+devtools::install_github("PBGLMichaelHall/QTLseqr",force = TRUE)
+library(QTLseqr)
 # install.packages("tinytex")
 # install.packages("vcfR")
 # install.packages("tidyr")
 # install.packages("ggplot2")
-devtools::install_github("PBGLMichaelHall/QTLseqr",force = TRUE)
-library(QTLseqr)
 library(tinytex)
 library(vcfR)
 library(tidyr)
@@ -150,6 +150,7 @@ setwd("/home/michael/Desktop/QTLseqr/extdata")
 importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",lowBulk = "D2_F2_TT",chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10"),filename = "Hall")
 
 ```
+![importVCF](https://user-images.githubusercontent.com/93121277/165956202-7ea2d997-6506-4e66-a1da-4e0510736c7e.png)
 
 
 
@@ -174,10 +175,9 @@ df <-
   ) 
 
 ```
-![Screenshot from 2022-03-30 15-38-14](https://user-images.githubusercontent.com/93121277/160847939-5d0feb2d-8d54-4d59-949d-be1939df8de2.png)
 
-# Inspect the head of the df object
-![Screenshot from 2022-03-30 15-41-45](https://user-images.githubusercontent.com/93121277/160848653-41ab84f1-1d37-49aa-9bd4-ea1319704c8f.png)
+![removing](https://user-images.githubusercontent.com/93121277/165956524-43fb8aca-c6c1-4f35-ba99-863bbcee0e50.png)
+
 
 
 ```r
@@ -216,13 +216,14 @@ df_filt <-
     #    minGQ = 0
   )
 ```
-![Screenshot from 2022-04-01 08-29-37](https://user-images.githubusercontent.com/93121277/161207708-a50c7061-94ce-4729-b764-417bdb488d32.png)
+![dffilt](https://user-images.githubusercontent.com/93121277/165956705-0faa10da-4fc2-4cfe-bc2c-b1bf8b51cdb2.png)
+
 
 
 ```r
 
 #Run G' analysis
-df_filt<-runGprimeAnalysis_MH(
+df_filt<-runGprimeAnalysis(
   SNPset = df_filt,
   windowSize = 5000000,
   outlierFilter = "deltaSNP",
@@ -240,7 +241,7 @@ plotGprimeDist(SNPset = df_filt, outlierFilter = "Hampel")
 
 ```r
 #We can see raw data before and after our filtering step
-plotGprimeDist_MH(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.1)
+plotGprimeDist(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.1)
 ```
 ![Screenshot from 2022-04-01 08-59-04](https://user-images.githubusercontent.com/93121277/161212125-9daf552a-ddb1-4a50-8603-08adbf21a869.png)
 
@@ -253,7 +254,7 @@ plotGprimeDist_MH(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold =
 ``` r {r QTLSEQ, warning = FALSE}
 
 #Run QTLseq analysis
-df_filt2 <- runQTLseqAnalysis_MH(
+df_filt2 <- runQTLseqAnalysis(
   SNPset = df_filt,
   windowSize = 5000000,
   popStruc = "F2",
