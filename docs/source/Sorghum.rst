@@ -200,7 +200,7 @@ importFromGATK
 
 .. code:: r
 
-   python gatk VariantsToTable --variant freebayes_D2.filtered.vcf --fields CHROM --fields POS --fields REF --fields ALT --genotype-fields AD --genotypes-fields DP --genotypes-fields GQ --genotypes-fields PL --output Hall.table
+   python gatk VariantsToTable --variant freebayes_D2.filtered.vcf --fields CHROM --fields POS --fields REF --fields ALT --genotyp-fields AD --genotype-fields DP --genotype-fields GQ --genotype-fields PL --output Hall.table
 
 ::
 
