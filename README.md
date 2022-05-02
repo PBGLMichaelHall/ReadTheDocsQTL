@@ -127,11 +127,12 @@ log10(p-values), enabling identification and plotting of QTL.
 ``` r {r libraries}
 devtools::install_github("PBGLMichaelHall/QTLseqr",force = TRUE)
 library(QTLseqr)
-# install.packages("tinytex")
 # install.packages("vcfR")
 # install.packages("tidyr")
 # install.packages("ggplot2")
-library(tinytex)
+# install.packages("dplyr")
+library(dplyr)
+library(tidyr)
 library(vcfR)
 library(tidyr)
 library(ggplot2)
@@ -172,6 +173,7 @@ df <-
     highBulk = HighBulk,
     lowBulk = LowBulk,
     chromList = chromList
+    sep = ","
   ) 
 
 ```
