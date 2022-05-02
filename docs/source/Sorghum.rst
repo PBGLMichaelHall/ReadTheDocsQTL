@@ -117,14 +117,13 @@ Load/install libraries
 ----------------------
 
 .. code:: r 
-   
-   install.packages(“tinytex”) 
+
+   devtools::install_github(“PBGLMichaelHall/QTLseqr”,force = TRUE) 
    install.packages(“vcfR”) 
    install.packages(“tidyr”) 
    install.packages(“ggplot2”)
-   devtools::install_github(“PBGLMichaelHall/QTLseqr”,force = TRUE)   
+    
    library(QTLseqr) 
-   library(tinytex) 
    library(vcfR) 
    library(tidyr)
    library(ggplot2)
@@ -146,69 +145,73 @@ Pre-Filtering Rules
 
    Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only take    SNPS, ie, length of REF and ALT== 1
 
+::
+
 Importing Data
 ==============
 
-
-Read Data
-----------
-
-.. code:: r
-
-   vcf <- read.vcfR(file = "freebayes_D2.filtered.vcf")
-
-.. figure:: ../images/1.png
-   :alt: 
-
-Convert Data
-------------
+importFromVCF
+-------------
 
 .. code:: r
 
+   df <- importFromVCF(file = "freebayes_D2.filtered.vcf", highBulk = "D2_F2_tt", lowBulk =    "D2_F2_TT", filname = "Hall")
 
-   #Convert to tidy data frame
-   VCF_TIDY <- vcfR2tidy(vcf)
+::
 
-.. figure:: ../images/2.png
-   :alt: 
+importFromGATK
+--------------
 
-Call the Parser
-===============
-
-.. code:: r
-
-   QTLParser_1_MH(vcf = VCF_TIDY, HighBulk = "D2_F2_tt",LowBulk = "D2_F2_TT", filename = Hall)
-
-.. figure:: ../images/3.png
-   :alt: 
-
-Preview the CSV file
---------------------
+   An offical Github GATK Genomic Analysis Toolkit repository can be found here to download 
+   https://github.com/broadinstitute/gatk
 
 
-
-.. figure:: ../images/4.png
-   :alt: 
-
-
-
-Invoke unique command to extract Sample names reverse comapatible to the VCF
-----------------------------------------------------------------------------
+   However, we want to clone the repository and make a build
 
 .. code:: r
 
-   unique(VCF_TIDY$gt$Indiv)
+   git clone https://github.com/broadinstitute/gatk
 
-.. figure:: ../images/5.png
-   :alt: 
 
-Input Fields
-============
+
+   Navigate to find gradlew and type the command   
 
 .. code:: r
 
-   #Set High bulk and Low bulk sample names and parser generated file name
-   #The file name is generated from the QTLParser_1_MH function in line 119
+   gradlew bundle
+
+
+
+   To verify it is working invoke python interpreter 
+
+.. code:: r
+
+   python gatk --help
+
+
+
+.. code:: r
+
+   python gatk --list
+
+
+
+   To produce the input file Hall.table, run the following command
+
+.. code:: r
+
+   python gatk VariantsToTable --variant freebayes_D2.filtered.vcf --fields CHROM --fields POS --fields REF --fields ALT --genotype-fields AD --genotypes-fields DP --genotypes-fields GQ --genotypes-fields PL --output Hall.table
+
+::
+
+
+Input Fields ImportFromVCF
+==========================
+
+.. code:: r
+
+   Set High bulk and Low bulk sample names and parser generated file name
+   The file name is generated from the QTLParser_1_MH function in line 119
 
    HighBulk <- "D2_F2_tt"
    LowBulk <- "D2_F2_TT"
@@ -220,7 +223,7 @@ Input Fields
 
 
 importFromTable
-===============
+---------------
 
 .. code:: r
 
@@ -243,6 +246,35 @@ Inspect Header
 .. figure:: ../images/7.png
    :alt: 
 
+Input Fields ImportFromGATK
+==========================
+
+.. code:: r
+
+   #Set High bulk and Low bulk sample names and parser generated file name
+   #The file name is generated from the QTLParser_1_MH function in line 119
+
+   HighBulk <- "D2_F2_tt"
+   LowBulk <- "D2_F2_TT"
+   file <- "Hall.table"
+
+   #Choose which chromosomes/contigs will be included in the analysis,
+
+   Chroms <- c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10")
+
+
+importFromTable
+---------------
+
+.. code:: r
+
+   df <-
+     importFromGATK(
+       file = file,
+       highBulk = HighBulk,
+       lowBulk = LowBulk,
+       chromList = Chroms
+     ) 
 
 Histograms
 ----------
