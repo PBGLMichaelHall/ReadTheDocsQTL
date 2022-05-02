@@ -166,7 +166,7 @@ importFromGATK
    https://github.com/broadinstitute/gatk
 
 
-   However, we want to clone the repository and make a build
+   **However, we want to clone the repository and make a build:**
 
 .. code:: r
 
@@ -174,7 +174,7 @@ importFromGATK
 
 
 
-   Navigate to find gradlew and type the command   
+   **Navigate to find gradlew and type the command:**   
 
 .. code:: r
 
@@ -182,7 +182,7 @@ importFromGATK
 
 
 
-   To verify it is working invoke python interpreter 
+   **To verify it is working invoke python interpreter:** 
 
 .. code:: r
 
@@ -196,7 +196,7 @@ importFromGATK
 
 
 
-   To produce the input file Hall.table, run the following command
+   **To produce the input file Hall.table, run the following command:**
 
 .. code:: r
 
@@ -210,14 +210,13 @@ Input Fields ImportFromVCF
 
 .. code:: r
 
-   Set High bulk and Low bulk sample names and parser generated file name
-   The file name is generated from the QTLParser_1_MH function in line 119
+   **Define High bulk and Low bulk sample names as an input object and define parser generated file name. The file name is generated from ImportFromVCF function.**
 
    HighBulk <- "D2_F2_tt"
    LowBulk <- "D2_F2_TT"
    file <- "Hall.csv"
 
-   #Choose which chromosomes/contigs will be included in the analysis,
+   **Choose and define which chromosomes/contigs will be included in the analysis. The chromosome/contg names are reverse compatible with VCF names.**
 
    Chroms <- c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10")
 
@@ -251,14 +250,13 @@ Input Fields ImportFromGATK
 
 .. code:: r
 
-   #Set High bulk and Low bulk sample names and parser generated file name
-   #The file name is generated from the QTLParser_1_MH function in line 119
+   **Define Objects High bulk, Low bulk and file given there proper names.**
 
    HighBulk <- "D2_F2_tt"
    LowBulk <- "D2_F2_TT"
    file <- "Hall.table"
 
-   #Choose which chromosomes/contigs will be included in the analysis,
+   **Choose which chromosomes/contigs will be included in the analysis.**
 
    Chroms <- c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10")
 
@@ -282,8 +280,11 @@ Histograms
 
 .. code:: r
 
-   #plot histograms associated with filtering arguments such as mamximum and minumum Total Depths and reference Allele Frequency to determine cut off        values 
+   **Make histograms associated with filtering arguments. Such as Minimum Depth, Maximum Depth, Reference Allele Frequency, Minimum Sample Depth, and Genotype Quality.
+   
    ggplot(data =df) + geom_histogram(aes(x = DP.LOW + DP.HIGH)) + xlim(0,400)
+   
+   
    ggsave(filename = "Depth_Histogram.png",plot=last_plot())
 
 .. figure:: ../images/8.png
@@ -302,11 +303,11 @@ filterSNPs
 
 .. code:: r
 
-   #Filter SNPs based on some criteria 
+   **Filter SNPs:**
    df_filt <- filterSNPs( SNPset = df,
    refAlleleFreq = 0.20, minTotalDepth = 100, maxTotalDepth = 400,
    minSampleDepth = 40, 
-   # minGQ = 0 )
+   minGQ = 0 )
 
 .. figure:: ../images/10.png
    :alt: 
@@ -317,7 +318,8 @@ runGprimeAnalysis_MH
 
 .. code:: r
 
-   #Run G' analysis
+   **Run G' analysis:**
+   
    df_filt<-runGprimeAnalysis_MH(
      SNPset = df_filt,
      windowSize = 5000000,
@@ -334,9 +336,11 @@ plotGprimeDist_MH
 
 .. code:: r
 
-   #The plot reveals a skewed G Prime statistic with a really small variance. Perhaps it is due to the small number of variants called.
-   #In addition, Hampels outlier filter in the second argument, can also be changed to "deltaSNP"
-   plotGprimeDist(SNPset = df_filt, outlierFilter = "Hampel")
+   **The plot reveals a skewed G Prime statistic with a really small variance. Perhaps it is due to relatively High Coverage with respect to Bulk Sample Sizes and not a lot of variants called.**
+   
+   **In addition, Hampels outlier filter in the second argument can also be changed to "deltaSNP".**
+   
+   plotGprimeDist(SNPset = df_filt, outlierFilter = "Hampel",filterThreshold = 0.1, binwidth = 0.5)
 
 .. figure:: ../images/12.png
    :alt: 
@@ -344,8 +348,9 @@ plotGprimeDist_MH
 
 .. code:: r
 
-   #We can see raw data before and after our filtering step
-   plotGprimeDist_MH(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.1)
+   **We can see raw data before and after our filtering step**
+   
+   plotGprimeDist_MH(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.1,binwidth=0.5)
 
 .. figure:: ../images/13.png
    :alt: 
@@ -356,7 +361,9 @@ runQTLseqAnalysis_MH
 .. code:: r
    
 
-   #Run QTLseq analysis
+   **Run QTLseq analysis:**
+   
+   
    df_filt2 <- runQTLseqAnalysis_MH(
      SNPset = df_filt,
      windowSize = 5000000,
@@ -390,7 +397,9 @@ nSNPs
 
 .. code:: r
 
-   #Plot Snps as a function of chromosome and position values
+   **Plot Snps as a function of chromosome and position values**
+   
+   
    plotQTLStats(SNPset = df_filt2, var = "nSNPs")
    ggsave(filename = "nSNPs.png",plot = last_plot())
 
@@ -403,7 +412,9 @@ Gprime
 
 .. code:: r
 
-   #Using QTLStats funciton plot Gprime Statistic with False Discovery Rate Threhshold as a third argument boolean operator as TRUE. The q value is used as FDR threshold null value is 0.05%.
+   **Using QTLStats funciton plot Gprime Statistic with False Discovery Rate Threhshold as a third argument boolean operator as TRUE. The q value is used as FDR threshold null value is 0.05%.**
+   
+   
    plotQTLStats(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE, q = 0.01)
    ggsave(filename = "GPrime.png",plot = last_plot())
 
@@ -415,7 +426,8 @@ deltaSNP
 
 .. code:: r
 
-   #Again using plotQTLStats change second argument varaible to deltaSNP and plot.
+   **Again using plotQTLStats change second argument varaible to deltaSNP and plot.**
+   
    plotQTLStats(SNPset = df_filt2, var = "deltaSNP", plotIntervals  = TRUE)
    ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
 
@@ -427,7 +439,8 @@ negLog10Pval
 
 .. code:: r
 
-   #Finally with plotQTLStats plot negLog10Pval
+   **Finally with plotQTLStats plot negLog10Pval.**
+   
    plotQTLStats(SNPset = df_filt2, var = "negLog10Pval",plotThreshold = TRUE,q=0.01)
    ggsave(filename = "negLog10Pval.png",plot = last_plot())
 
@@ -440,8 +453,10 @@ Gprime Subset
 
 .. code:: r
 
-   #Add subset argument to focus on particular chromosomes one, three, four, and six.
-   #The reason is due to signficant QTL regions
+   **Add subset argument to focus on particular chromosomes one, three, four, and six.**
+   **The reason is due to signficant QTL regions**
+   
+   
    plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subset = c("Chr01","Chr03","Chr04","Chr06"))
 
 .. figure:: ../images/20.png
@@ -457,7 +472,7 @@ SNP Densities
 
 .. code:: r
 
-   #install.packages("rMVP")
+   install.packages("rMVP")
    library(rMVP)
    sample<-"Semi_Dwarfism_in_Sorghum"
    pathtosample <- "/home/michael/Desktop/QTLseqr/extdata/subset_freebayes_D2.filtered.vcf.gz"
@@ -517,8 +532,10 @@ Obs_Allel_Freq
 
 .. code:: r
 
-   #Use the function to plot allele frequencies per chromosome
-   #Second argument size specifes size of scalar factor on nSNPs and if you have a relatively small SNP set .001 is a good startin point otherwise set to 1
+   **Use the function to plot allele frequencies per chromosome.**
+   **Second argument size specifes size of scalar factor on nSNPs and if you have a relatively small SNP set .001 is a good startin point otherwise set to 1**
+   
+   
    Obs_Allele_Freq(SNPSet = df_filt, size = .001)
 
 .. figure:: ../images/23.png
@@ -530,7 +547,8 @@ Obs_Allele_Freq2
 
 .. code:: r
 
-   ##Use the function to investigate chromosomal region of interest
+   **Use the function to investigate chromosomal region of interest**
+   
    Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "Chr04", threshold = .90)
 
 .. figure:: ../images/24.png
@@ -545,28 +563,36 @@ Total Coverage and Expected Allelic Frequencies
    E(n1) = E(n2) = E(n3) = E(n4) = C/2
 
 
-   # Read in the csv file from High bulk tt
+   **Read in the csv file from High bulk tt**
+   
    tt<-read.table(file = "D2_F2_tt.csv",header = TRUE,sep = ",")
    
-   # Calculate average Coverage per SNP site
+   **Calculate average Coverage per SNP site**
+   
    mean(tt$DP)
    
-   # Find REalized frequencies
+   **Find REalized frequencies**
+   
    p1_STAR <- sum(tt$AD_ALT.) / sum(tt$DP)
 
-   # Read in the csv file from Low Bulk TT
+   **Read in the csv file from Low Bulk TT.**
+   
    TT<-read.table(file ="D2_F2_TT.csv",header = TRUE,sep=",")
    
-   # Calculate average Coverage per SNP sit
+   **Calculate average Coverage per SNP sit**
+   
    mean(TT$DP)
    
-   # Find Realized frequencies
+   **Find Realized frequencies**
+   
    p2_STAR <- sum(TT$AD_ALT.) / sum(TT$DP)
    
-   # Take the average of the Averages
+   **Take the average of the Averages**
+   
    C <-(mean(tt$DP)+mean(TT$DP))/2
+   
    C<-round(C,0)
-
+   **Find Coverage Value**
    C
    110
    
@@ -589,25 +615,25 @@ High Bulk
    
    
    par(mfrow=c(1,1))
-   # Define Ranges of Success
+   **Define Ranges of Success**
    success <- 0:90
    
-   # The Difference between realized and Expected Frequencies 
+   **The Difference between realized and Expected Frequencies**
    
-   # ns : Sample Size taken from Low Bulk
+   **ns : Sample Size taken from Low Bulk**
    
-   # 2(ns)p1_star ~ Binomial(2(ns),p1)
+   **2(ns)p1_star ~ Binomial(2(ns),p1)**
    
-   # p1 Expected Frequencies
+   **p1 Expected Frequencies**
    
-   # Expected Frequencies:
+   **Expected Frequencies:**
    
-   # E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 110
+   **E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 110**
    
    
-   # We prefer for accuracy to have ns >> C >> 1
+   **We prefer for accuracy and a powerful G Prime Test to have ns >> C >> 1**
   
-   #However, it is not true in this case.
+   **However, it is not true in this case.**
    
    plot(success, dbinom(success, size = 90, prob = .50), type = "h",main="Binomial Sampling from Diploid Orgainism from High Bulk",xlab="2(ns)(p1_STAR)",ylab="Density")
 
@@ -620,9 +646,9 @@ Low Bulk
 .. code:: r
 
 
-   # ns : Sample Size from High Bulk
-   # 2(ns)p2_star ~ Binomial(2(ns),p2)
-   # p2 Expected Frequencies
+   **ns : Sample Size from High Bulk**
+   **2(ns)p2_star ~ Binomial(2(ns),p2)**
+   **p2 Expected Frequencies**
    success <- 0:76
    plot(success, dbinom(success, size = 76, prob = 0.5), type = "h",main="Binomial Sampling from Diploid Organism from Low Bulk",xlab="2(n2)(p2_STAR)",ylab="Density")
 
