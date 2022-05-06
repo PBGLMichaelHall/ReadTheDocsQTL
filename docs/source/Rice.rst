@@ -327,7 +327,7 @@ runGprimeAnalysis_MH
 .. code:: r
 
    #Run G' analysis
-   df_filt<-runGprimeAnalysis_MH(
+   df_filt<-runGprimeAnalysis(
      SNPset = df_filt,
      windowSize = 1e6,
      outlierFilter = "deltaSNP",
@@ -356,7 +356,7 @@ plotGprimeDist_MH
 
    #We can see raw data before and after our filtering step
    
-   plotGprimeDist_MH(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.1)
+   plotGprimeDist(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.1)
 
 .. figure:: ../images/70.png
    :alt: 
@@ -369,7 +369,7 @@ runQTLseqAnalysis_MH
    
 
    #Run QTLseq analysis
-   df_filt2 <- runQTLseqAnalysis_MH(
+   df_filt2 <- runQTLseqAnalysis(
      SNPset = df_filt,
      windowSize = 1e6,
      popStruc = "F2",
