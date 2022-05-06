@@ -158,7 +158,7 @@ The Lonely Parser
 
 .. code:: r 
 
-    df <- QTLParser_1_MH(vcf = "freebayes_D2.filtered.vcf", highBulk = "D2_F2_tt", lowBulk = "D2_F2_TT", filename = "Hall.csv")
+    df <- QTLParser_1_MH(vcf = "freebayes_D2.filtered.vcf", highBulk = "ET-pool-385", lowBulk = "ES-pool-430", filename = "Hall.csv")
 
 Import Data
 ===========
@@ -177,7 +177,7 @@ importFromTable
 
     Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1")
    
-   df <- importFromTable(file = "Hall.csv", highBulk = "D2_F2_tt", lowBulk = "D2_F2_TT", chromList = Chroms, sep = ",")
+   df <- importFromTable(file = "Hall.csv", highBulk = "ET-pool-385", lowBulk = "ES-pool-430", chromList = Chroms, sep = ",")
 
    **Method 2 (Most convienent)**
 
@@ -194,7 +194,7 @@ importFromVCF
 
    Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1")
    
-   df <- importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",lowBulk = "D2_F2_TT",chromList = Chroms,filename = "Hall",filter = FALSE)
+   df <- importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "ET-pool-385",lowBulk = "ES-pool-430",chromList = Chroms,filename = "Hall",filter = FALSE)
    
 GATK
 ----
@@ -246,7 +246,7 @@ GATK
 
     Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1")
    
-   df <- importFromGATK(file = "Hall.table", highBulk = "D2_F2_tt", lowBulk = "D2_F2_TT", chromlist = Chroms)
+   df <- importFromGATK(file = "Hall.table", highBulk = "ET-pool-385", lowBulk = "ES-pool-430", chromlist = Chroms)
 
    **Method 1 is the most biased and therefore cuts out more SNPs than Methods 2 & 3 which produce nearly identical SNP sets.**
 
