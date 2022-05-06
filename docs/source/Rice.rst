@@ -213,7 +213,7 @@ GATK
    
    **Download the lastest version by clicking on gatk-4.2.6.1.zip**
    **Extract the contents into your Downloads Folder**
-   **What open source opeating system are you running?**
+   **What open source opeating system are you running? Ubuntu 18.04, Code name Bionic, it must be a Tuesday**
    
    .. code:: r   
    
@@ -241,6 +241,8 @@ GATK
 .. figure:: ../images/gatkcommand.png
 
    This should produce a file called **Hall.table**
+
+.. code:: r
 
     Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1")
    
