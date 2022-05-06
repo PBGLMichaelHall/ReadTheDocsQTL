@@ -8,6 +8,9 @@ QTL_Rice_Cold_Tolerance
 QTL-Rice-Cold-Tolerance
 =======================
 
+
+
+
 QTLseqr is an R package for QTL mapping using NGS Bulk Segregant
 Analysis.
 
@@ -115,13 +118,11 @@ Load/install libraries
 
 .. code:: r 
    
-   install.packages(“tinytex”) 
    install.packages(“vcfR”) 
    install.packages(“tidyr”) 
    install.packages(“ggplot2”)
    devtools::install_github(“PBGLMichaelHall/QTLseqr”,force = TRUE)   
    library(QTLseqr) 
-   library(tinytex) 
    library(vcfR) 
    library(tidyr)
    library(ggplot2)
@@ -141,48 +142,116 @@ Pre-Filtering Rules
 
 .. code:: r
 
-   Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only take SNPS,      ie, length of REF and ALT== 1
-
-Importing Data
-==============
-
-Read Data
----------
-
-.. code:: r
-
-   vcf <- read.vcfR(file = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf.gz"
-
-.. figure:: ../images/63.png
-   :alt: 
-
-Convert Data
-------------
-
-.. code:: r
+   Vcf file can contain bialleleic variants before parsing, however, out of a principal investigators preference, the user can (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only call SNPS, so filter out **INDELS** with the following command line.
 
 
-   #Convert to tidy data frame
-   VCF_TIDY <- vcfR2tidy(vcf)
-
-
-Call the Parser
-===============
-
-.. code:: r
-
-   QTLParser_1_MH(vcf = VCF_TIDY, HighBulk = "ET-pool-385",LowBulk = "ES-pool-430", filename = Hall)
-
-.. figure:: ../images/64.png
+.. figure:: ../images/upstreamfilter.png
    :alt: 
 
 
-Invoke unique command to extract Sample names reverse comapatible to the VCF
-----------------------------------------------------------------------------
+The Lonely Parser
+=================
+
+   Calling my Parser **QTLParser_1_MH**
+   This method requires 4 arguments, a **vcf**, **highBulk**, **lowBulk**, and **filename**.
+   Proceeding this Call you must invoke **importFromTable** before Filtering.
+
+.. code:: r 
+
+    df <- QTLParser_1_MH(vcf = "freebayes_D2.filtered.vcf", highBulk = "D2_F2_tt", lowBulk = "D2_F2_TT", filename = "Hall.csv")
+
+Import Data
+===========
+
+  **Method 1 (Biased due to parser configuration)**
+  
+  Calling **importFromTable** on Hall.csv file 
+  This method requires 5 inputs to 5 arguments, **file**, **highBulk**, **lowBulk**, **chromList** and **sep**.
+  
+
+
+importFromTable
+---------------
 
 .. code:: r
 
-   unique(VCF_TIDY$gt$Indiv)
+    Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1")
+   
+   df <- importFromTable(file = "Hall.csv", highBulk = "D2_F2_tt", lowBulk = "D2_F2_TT", chromList = Chroms, sep = ",")
+
+   **Method 2 (Most convienent)**
+
+   Calling **importFromVCF**
+   This method requires 5 arguments, a vcf **file**, **highBulk**, **lowBulk**, **chromList**, **filename**, and **filter.**
+   **The filtering argument is a Boolean accepting only TRUE or FALSE. If TRUE then it filters out all SNPs that did not "PASS" in that INFO field.**
+   **If it is FALSE then there is no filter applied at all.** 
+
+
+importFromVCF
+-------------
+
+.. code:: r
+
+   Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1")
+   
+   df <- importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",lowBulk = "D2_F2_TT",chromList = Chroms,filename = "Hall",filter = FALSE)
+   
+GATK
+----
+
+   Method 3 (Best in my opinion)
+
+   Calling **importFromGATK**
+   This method requires 4 arguments, **a vcf file**, **highBulk**, **lowBulk**, and **chromlist**.
+   If you do not have the software on your machine, first visit this website.
+   https://gatk.broadinstitute.org/hc/en-us/articles/360036194592-Getting-started-with-GATK4
+   Go to section 4 and click the first from left to right **here** hyperlink
+.. code:: r   
+   
+.. figure:: ../images/GATKDownload.png
+   :alt: 
+   
+   **Download the lastest version by clicking on gatk-4.2.6.1.zip**
+   **Extract the contents into your Downloads Folder**
+   **What open source opeating system are you running?**
+   
+   .. code:: r   
+   
+.. figure:: ../images/WhichVersionUbuntu.png
+   :alt: 
+   
+   
+   
+.. code:: r   
+   
+.. figure:: ../images/GATKRelease.png
+   :alt: 
+  
+   **Navigate to the folder containg gatk executable python script**
+   
+.. code:: r
+
+.. figure:: ../images/gatk.png
+   
+   Call **VariantsToTable** sub executable program with all appropriate flags
+   
+   
+.. code:: r
+
+.. figure:: ../images/gatkcommand.png
+
+   This should produce a file called **Hall.table**
+
+    Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1")
+   
+   df <- importFromGATK(file = "Hall.table", highBulk = "D2_F2_tt", lowBulk = "D2_F2_TT", chromlist = Chroms)
+
+   **Method 1 is the most biased and therefore cuts out more SNPs than Methods 2 & 3 which produce nearly identical SNP sets.**
+
+
+.. code:: r
+
+
 
 
 Input Fields
