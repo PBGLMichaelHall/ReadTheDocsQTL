@@ -448,13 +448,13 @@ vcf <- read.vcfR(file = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~f
 ![Screenshot from 2022-04-01 09-27-24](https://user-images.githubusercontent.com/93121277/161215916-c3328eaf-721b-4778-940a-e356fe60e9ca.png)
 
 ```r
-#Convert to tidy data frame
+# Convert to tidy data frame
 VCF_TIDY <- vcfR2tidy(vcf)
 ```
 ![Screenshot from 2022-04-01 09-37-35](https://user-images.githubusercontent.com/93121277/161217479-f8a99317-1dec-4b7b-a7de-04d488abbdf0.png)
 
 ```r
-#Call the Parser
+# Call the Parser
 QTLParser_1_MH(vcf = VCF_TIDY, HighBulk = "ET-pool-385",LowBulk = "ES-pool-430", filename = "Hall")
 ```
 # Standard Parser Output makes a list of Chromosome as named in VCF file
@@ -472,10 +472,6 @@ HighBulk <- "ET-pool-385"
 LowBulk <- "ES-pool-430"
 file <- "Hall.csv"
 ```
-# Preview the CSV file
-
-![Screenshot from 2022-04-01 10-33-41](https://user-images.githubusercontent.com/93121277/161226740-5b648928-97bd-40e4-8622-e8f845bbe271.png)
-
 
 ```r
 #Input chromosomes values which will be included in the analysis,
