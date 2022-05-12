@@ -13,38 +13,69 @@ guarantee.
 
 I have forked the repository to my github account and added a generic parser in R to do a Quantitative Trait Locus Bulk Segregant analysis. The hyperlink to Read the Docs is provided below. The reason I forked his repository is because the analysis was limited to GATK parsed vcf files. To make it more robust I added a generic R Parser that does a similar parsing. The parser function takes 4 arguments, a VCF Tidy Data frame which first was a VCF file then read by read.vcfR from vcfR package and finally converted to VCF Tidy Data Frame by vcfR2tidy function in vcfR package. The second and third arguments are the respective names given for High Bulk Sample and Low Bulk Sample which is reverse compatible with original vcf file. Lastly, the fourth and final argument is a user specified file name given to CSV input file used at the beginning of downstream analysis utilitzing importFromTable Function.
 
-########################################################################################################################################################
 
 # Read the Docs
 https://qtl-bsa.readthedocs.io/en/latest/Sorghum.html
 
-########################################################################################################################################################
 
 # I have added the following functions to the QTLseqr package:
 
 
 # tricube_Smooth 
-Uses Local Regression, Likelihood and Density Estimation and a Local Polynomial Model Term
-stats::predict(locfit::locfit(Stat~locfit::lp(POS, h = windowsize, deg= deg, nn=nn)),POS) where Stat is G Statistic. This allows the user to choose optimal parameter values to smooth the model basd on degree of polynomial deg or Nearest neighbor component of the smoothing parameter. Default value is 0.7.
+Uses Local Regression, Likelihood and Density Estimation and a Local Polynomial Model Term to filter out noise in the data.
+**stats::predict(locfit::locfit(Stat~locfit::lp(POS, h = windowsize, deg= deg, nn=nn)),POS)**
 
+Where Stat is G Statistic, however other variables can be used given they are in the data frame like frequencies etc. This allows the user to choose optimal parameter values to smooth the model basd on degree of polynomial deg or Nearest neighbor component of the smoothing parameter. Default value for KNN is 0.7 and degree of polynomial is zero.
 
-# runGprimeAnalysis_GPrime_Smooth
-This function uses as a skeleton runGprimeAnalysis but adds smoothing parameters "tricube_Smooth" to smooth the data based on user preference and optimal parameters which of course depends on the experiment and data used in the analysis.
-
-
-# plotQTLStats_MH2
-I have limited the functionality to variable "diff" as an option which computes differences between high and low bulk allelec frequencies be sure to use line = TRUE to plot this or not and you will see points instead.
 
 # Obs_Allele_Freq
-Plot allelic frequences from High and Low Bulk using nSNPs in window as size argument. Please start with a unit scale '1' until a satisfactory plot is made. 
+Plot allelic frequences from High and Low Bulk using nSNPs in window as size argument. Hoever, the size argument is actually a scalar quantity multiplied against nSNPs and so depending on the magnitude of the variants it helps to scale it down or up. Please start with a unit scale '1' until a satisfactory plot is made. 
+i.e.
+
+```r
+
+QTLseqr::Obs_Allele_Freq(SNPSet = df_filt, size = .001)
+
+```
 
 # Obs_Allele_Freq2
 Plot Independent Allelic Frequencies from High and Low Bulk with SNP position used as identifiers. Also returns a sorted data frame with Gprime statistic decending. The idea is to compare Allelic Frequencies from each bulk with Gprime Statistic for SNP called. 
 
+i.e.
+
+```r
+
+QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = 8, threshold = .66)
+
+```
 # Correlation
 This function takes a VCF file and a chromosome list and plots correlation related plots.
+Required libraries:
 
-# QTLseqr::AlleleFreqSlidingWindow
+```r
+
+**library(Hmisc)** 
+**library(PerformanceAnalytics)** 
+**library(corrplot)**
+
+```
+
+
+
+# Due to limitation on R Memory I recommend to use one plot at a time.
+i.e. 
+
+p1 = TRUE, p2 = FALSE,......etc.
+
+```r
+
+pdf(Correlation.pdf)
+QTLseqr::Correlation(vcffile = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf", chromlist =  c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1"), p1 = TRUE, p2 = FALSE, p3 = FALSE, p4 = FALSE, p5 = FALSE)
+dev.off()
+
+```
+
+# AlleleFreqSlidingWindow
 i.e.
 
 ```r
@@ -133,15 +164,16 @@ log10(p-values), enabling identification and plotting of QTL.
 
 ``` r {r libraries}
 devtools::install_github("PBGLMichaelHall/QTLseqr",force = TRUE)
-library(QTLseqr)
 # install.packages("vcfR")
 # install.packages("tidyr")
 # install.packages("ggplot2")
 # install.packages("dplyr")
+# install.packages("data.table")
+library(QTLseqr)
+library(data.table)
 library(dplyr)
 library(tidyr)
 library(vcfR)
-library(tidyr)
 library(ggplot2)
 
 ```
@@ -150,7 +182,7 @@ library(ggplot2)
 ``` r 
 setwd("/home/michael/Desktop/QTLseqr/extdata")
 ```
-# Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only take SNPS, ie, length of REF and ALT== 1
+# Vcf file must only contain bialleleic variants and Pure SNPs. (filter upstream, e.g., with bcftools view -v snps -m2 -M2), also the QTLseqR functions will only take SNPS, ie, length of REF and ALT== 1
 
 ```r
 # Invoke importFromVCF function and produce a .CSV file
@@ -328,6 +360,30 @@ plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subse
 
 # Use RMVP package to view SNPs on chromosomes/contigs
 
+```r
+
+install.packages("rMVP")
+library(rMVP)
+sample<-"Semi_Dwarfism_in_Sorghum"
+pathtosample <- "/home/michael/Desktop/QTLseqr/extdata/subset_freebayes_D2.filtered.vcf.gz"
+out<- paste0("mvp.",sample,".vcf")
+memo<-paste0(sample)
+dffile<-paste0("mvp.",sample,".vcf.geno.map")
+
+message("Making MVP data S1")
+MVP.Data(fileVCF=pathtosample,
+      #filePhe="Phenotype.txt",
+      fileKin=FALSE,
+      filePC=FALSE,
+      out=out)
+
+message("Reading MVP Data S1")
+df <- read.table(file = dffile, header=TRUE)
+message("Making SNP Density Plots")
+MVP.Report.Density(df[,c(1:3)], bin.size = 5000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
+
+```
+
 ![Screenshot from 2022-04-13 09-07-31](https://user-images.githubusercontent.com/93121277/163119749-97a84175-a79b-4366-8d21-0d8a3aa7d1a3.png)
 
 
@@ -367,121 +423,12 @@ Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "Chr04", threshold = .90)
 ![Screenshot from 2022-04-01 15-44-36](https://user-images.githubusercontent.com/93121277/161276189-686eadae-e152-472e-9c6d-034bb58b25f7.png)
 
 
-
-```r 
-setwd("/home/michael/Desktop/QTLseqr/extdata")
-# Theory and Analytical Framework of Sampling from BSA
-par(mfrow=c(1,1))
-# Define Ranges of Success
-success <- 0:90
-# The Difference between realized and Expected Frequencies 
-# ns : Sample Size taken from Low Bulk
-# 2(ns)p1_star ~ Binomial(2(ns),p1)
-# p1 Expected Frequencies
-# Expected Frequencies:
-# E(n1) = E(n2) = E(n3) = E(n4) = C/2 = 110
-# We prefer for accuracy to have ns >> C >> 1
-plot(success, dbinom(success, size = 90, prob = .50), type = "h",main="Binomial Sampling from Diploid Orgainism from High Bulk",xlab="2(ns)(p1_STAR)",ylab="Density")
-```
-![Screenshot from 2022-04-12 13-59-19](https://user-images.githubusercontent.com/93121277/162958721-9ef36567-ce74-40d9-939f-4e8d32aaa6a4.png)
-
-
-```r
-
-# ns : Sample Size from High Bulk
-# 2(ns)p2_star ~ Binomial(2(ns),p2)
-# p2 Expected Frequencies
-success <- 0:76
-plot(success, dbinom(success, size = 76, prob = 0.5), type = "h",main="Binomial Sampling from Diploid Organism from Low Bulk",xlab="2(n2)(p2_STAR)",ylab="Density")
-```
-![Screenshot from 2022-04-12 14-00-01](https://user-images.githubusercontent.com/93121277/162958735-eb1213dd-c642-4aa0-8d71-aace95750693.png)
-
-
-
-```r
-
-
-# Read in the csv file from High bulk tt
-tt<-read.table(file = "D2_F2_tt.csv",header = TRUE,sep = ",")
-# Calculate average Coverage per SNP site
-mean(tt$DP)
-# Find REalized frequencies
-p1_STAR <- sum(tt$AD_ALT.) / sum(tt$DP)
-
-# Read in the csv file from Low Bulk TT
-TT<-read.table(file ="D2_F2_TT.csv",header = TRUE,sep=",")
-# Calculate average Coverage per SNP sit
-mean(TT$DP)
-# Find Realized frequencies
-p2_STAR <- sum(TT$AD_ALT.) / sum(TT$DP)
-# Take the average of the Averages
-C <-(mean(tt$DP)+mean(TT$DP))/2
-C<-round(C,0)
-# Find realized frequencies
-
-par(mfrow=c(1,1))
-#Define Ranges of Success (Allele Frequencies High and Low)
-success <- 0:100
-#n1|p1_star ~ Poisson(lambda)
-plot(success, dpois(success, lambda = C*(1-p1_STAR)), type = 'h',main="n1|p1_STAR ~ Poisson(C[1-p1_STAR])",xlab="n1|(n3/n1+n3)",ylab="Prob")
-```
-![Screenshot from 2022-04-12 14-00-53](https://user-images.githubusercontent.com/93121277/162958765-f401723a-8206-4f08-b8c5-9803692a0730.png)
-
-
-
-```r
-hist(TT$AD_REF., probability = TRUE,main="Histogram of Actually Realized n1 Values",xlab="n1")
-```
-![Screenshot from 2022-04-12 14-01-21](https://user-images.githubusercontent.com/93121277/162958788-3270f67f-9188-4b53-a5c2-c7d54a42c2c7.png)
-
-
-```r
-#n2|p2_star ~ Poisson(lambda)
-plot(success, dpois(success, lambda = C*(1-p2_STAR)), type='h', main="n2|p2_STAR ~ Poisson(C[[1-p2_STAR])",xlab="n2|(n4/n2+n4)",ylab="Prob")
-```
-![Screenshot from 2022-04-12 14-01-49](https://user-images.githubusercontent.com/93121277/162958802-90370961-fd00-4edb-8c32-1653513e4964.png)
-
-
-```r
-hist(tt$AD_REF., probability = TRUE, main = "Histogram of Actually Realized n2 Values",xlab="n2")
-```
-![Screenshot from 2022-04-12 14-02-17](https://user-images.githubusercontent.com/93121277/162958812-55bd09e6-312e-48ce-941a-00aa8ae5bb0b.png)
-
-```r
-#n3|p1_star ~ Poisson(lambda)
-plot(success, dpois(success, lambda = C*p1_STAR),type='h',main="n3|p1_STAR ~ Poisson(C[1-p1_STAR])",xlab="n3|(n3/n1+n3)",ylab="Prob")
-```
-![Screenshot from 2022-04-12 14-02-47](https://user-images.githubusercontent.com/93121277/162958869-7590934e-c56c-4de1-9a68-f673208a4c4f.png)
-
-
-```r
-hist(TT$AD_ALT., probability = TRUE, main="Histogram of Acutally Realized n3 Values",xlab="n3")
-```
-![Screenshot from 2022-04-12 14-03-11](https://user-images.githubusercontent.com/93121277/162958878-62c6147c-f8f0-4262-badd-f1020798d18c.png)
-
-
-```r
-#n4|p2_star ~ Poisson(lambda)
-plot(success, dpois(success, lambda = C*p2_STAR), type = 'h',main="n4|p2_STAR ~ Poisson(C[1-p2_STAR])",xlab="n4|n4/(n2+n4)",ylab="Prob")
-```
-![Screenshot from 2022-04-12 14-03-41](https://user-images.githubusercontent.com/93121277/162958898-87ac503a-8def-4194-a74b-9bb28c3c21b1.png)
-
-```r
-hist(tt$AD_ALT., probability = TRUE, main="Histogram of Acutally Realized n4 Values",xlab="n4")
-```
-![Screenshot from 2022-04-12 14-04-02](https://user-images.githubusercontent.com/93121277/162958908-03550b8f-4772-4d05-ac23-205e9dc30b3e.png)
-
-
-#Assuming average sequencing coverage expected values for n1,n2,n3,n4
-C/2
+# Assuming average sequencing coverage expected values for n1,n2,n3,n4
+# C/2
 
 
 # p2 >> p1 QTL is present
 # However, ns >> C >> 1 is NOT TRUE
-
-```
-
-
 
 
 
@@ -489,15 +436,15 @@ C/2
 
 # Rice QTL Analysis: High Bulk sample size of 430 Tolerant to cold environments and Low Bulk sample size of 385 Suseptilble to cold environments
 ```r
-
-
 #Set Working Directory
 setwd("/home/michael/Desktop/RiceCold2")
 
-#vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTL-Rice-Cold functions will only take SNPS, ie, length of REF and ALT== 1
+#vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -v snps -m2 -M2), also the QTL-Rice-Cold functions will only take SNPS, ie, length of REF and ALT== 1
 vcf <- read.vcfR(file = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf.gz")
 
 ```
+
+
 ![Screenshot from 2022-04-01 09-27-24](https://user-images.githubusercontent.com/93121277/161215916-c3328eaf-721b-4778-940a-e356fe60e9ca.png)
 
 ```r
@@ -734,16 +681,6 @@ getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = "my_BSA_Q
 ```
 # Preview the QTL Summary
 ![Screenshot from 2022-04-01 09-58-43](https://user-images.githubusercontent.com/93121277/161220947-979d5bbf-8438-4110-a950-a33224878a01.png)
-
-```r
-
-#Use the function to plot allele frequencies per chromosome
-Obs_Allele_Freq(SNPSet = df_filt)
-```
-
-# Looks Dense
-![LowB](https://user-images.githubusercontent.com/93121277/158788612-ebe92c64-ed0b-48f8-9ef6-f7e8d6f7bd2d.png)
-![HighB](https://user-images.githubusercontent.com/93121277/158788656-ee153e0a-1a6a-4b28-86b8-f7f218bb1287.png)
 
 
 # Filter Low Allelic Depth Frequencies
@@ -772,40 +709,26 @@ Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = 8, threshold = .75)
 #Set Working Directory
 setwd("/home/michael/Desktop/RiceCold2")
 
-#vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTL-Rice-Cold functions will only take SNPS, ie, length of REF and ALT== 1
-vcf <- read.vcfR(file = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf.gz")
+# vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTL-Rice-Cold functions will only take SNPS, ie, length of REF and ALT== 1
 
 ```
-![Screenshot from 2022-04-01 09-27-24](https://user-images.githubusercontent.com/93121277/161215916-c3328eaf-721b-4778-940a-e356fe60e9ca.png)
+
+# Assuming Gatk is available and downloaded on your machine invoke this command to produce the input file to the downstream analysis.
 
 ```r
-#Convert to tidy data frame
-VCF_TIDY <- vcfR2tidy(vcf)
-```
-![Screenshot from 2022-04-01 09-37-35](https://user-images.githubusercontent.com/93121277/161217479-f8a99317-1dec-4b7b-a7de-04d488abbdf0.png)
 
-```r
-#Call the Parser
-QTLParser_1_MH(vcf = VCF_TIDY, HighBulk = "ET-pool-385",LowBulk = "ES-pool-430", filename = "Hall")
+python gatk VariantsToTable --variant freebayes_D2.filtered.vcf --fields CHROM --fields POS --fields REF --fields ALT --genotyp-fields AD --genotype-fields DP --genotype-fields GQ --genotype-fields PL --output Hall.table
+
 ```
-# Standard Parser Output makes a list of Chromosome as named in VCF file
-![Screenshot from 2022-04-01 09-41-00](https://user-images.githubusercontent.com/93121277/161218164-169207c9-7039-4857-9066-f59f07c206b7.png)
-# Also find unique sample names reverse compatible with VCF file
-```r
-unique(VCF_TIDY$gt$Indiv)
-```
-![Screenshot from 2022-04-01 09-42-58](https://user-images.githubusercontent.com/93121277/161218336-79ca6524-e2ba-47fd-bbd8-68125bdd966b.png)
+
 
 ```r
 #Set High bulk and Low bulk sample names and parser generated file name
 
 HighBulk <- "ET-pool-385"
 LowBulk <- "ES-pool-430"
-file <- "Hall.csv"
+file <- "Hall.table"
 ```
-# Preview the CSV file
-
-![Screenshot from 2022-04-01 10-33-41](https://user-images.githubusercontent.com/93121277/161226740-5b648928-97bd-40e4-8622-e8f845bbe271.png)
 
 
 ```r
@@ -815,7 +738,7 @@ Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1
 
 
 df <-
-  importFromTable(
+  importFromGATK(
     file = file,
     highBulk = HighBulk,
     lowBulk = LowBulk,
@@ -1013,15 +936,6 @@ getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = "my_BSA_Q
 # Preview the QTL Summary
 ![Screenshot from 2022-04-01 09-58-43](https://user-images.githubusercontent.com/93121277/161220947-979d5bbf-8438-4110-a950-a33224878a01.png)
 
-```r
-
-#Use the function to plot allele frequencies per chromosome
-Obs_Allele_Freq(SNPSet = df_filt)
-```
-
-# Looks Dense
-![LowB](https://user-images.githubusercontent.com/93121277/158788612-ebe92c64-ed0b-48f8-9ef6-f7e8d6f7bd2d.png)
-![HighB](https://user-images.githubusercontent.com/93121277/158788656-ee153e0a-1a6a-4b28-86b8-f7f218bb1287.png)
 
 
 # Filter Low Allelic Depth Frequencies
