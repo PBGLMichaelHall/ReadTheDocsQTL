@@ -588,7 +588,7 @@ df_filt <-
 
 ```r
 #Run G' analysis
-df_filt<-runGprimeAnalysis_MH(
+df_filt<-runGprimeAnalysis(
   SNPset = df_filt,
   windowSize = 1e6,
   outlierFilter = "deltaSNP",
@@ -603,7 +603,7 @@ df_filt<-runGprimeAnalysis_MH(
 
 
 #Run QTLseq analysis
-df_filt2 <- runQTLseqAnalysis_MH(
+df_filt2 <- runQTLseqAnalysis(
   SNPset = df_filt,
   windowSize = 1e6,
   popStruc = "F2",
@@ -625,7 +625,7 @@ hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Hist
 ```r
 
 # G' Distribution Plot
-plotGprimeDist_MH(SNPset = df_filt2, outlierFilter = "Hampel")
+plotGprimeDist(SNPset = df_filt2, outlierFilter = "Hampel")
 ggsave(filename = "Hampel_GPrime.png",plot = last_plot())
 
 ```
@@ -636,7 +636,7 @@ ggsave(filename = "Hampel_GPrime.png",plot = last_plot())
 ```r
 
 
-plotGprimeDist_MH(SNPset = df_filt2, outlierFilter = "deltaSNP",filterThreshold = 0.1)
+plotGprimeDist(SNPset = df_filt2, outlierFilter = "deltaSNP",filterThreshold = 0.1)
 ggsave(filename = "DeltaSNP.png",plot = last_plot())
 
 ```
@@ -866,7 +866,7 @@ df_filt <-
 
 ```r
 #Run G' analysis
-df_filt<-runGprimeAnalysis_MH(
+df_filt<-runGprimeAnalysis(
   SNPset = df_filt,
   windowSize = 1e6,
   outlierFilter = "deltaSNP",
@@ -881,7 +881,7 @@ df_filt<-runGprimeAnalysis_MH(
 
 
 #Run QTLseq analysis
-df_filt2 <- runQTLseqAnalysis_MH(
+df_filt2 <- runQTLseqAnalysis(
   SNPset = df_filt,
   windowSize = 1e6,
   popStruc = "F2",
@@ -903,7 +903,7 @@ hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Hist
 ```r
 
 # G' Distribution Plot
-plotGprimeDist_MH(SNPset = df_filt2, outlierFilter = "Hampel")
+plotGprimeDist(SNPset = df_filt2, outlierFilter = "Hampel")
 ggsave(filename = "Hampel_GPrime.png",plot = last_plot())
 
 ```
@@ -914,7 +914,7 @@ ggsave(filename = "Hampel_GPrime.png",plot = last_plot())
 ```r
 
 
-plotGprimeDist_MH(SNPset = df_filt2, outlierFilter = "deltaSNP",filterThreshold = 0.1)
+plotGprimeDist(SNPset = df_filt2, outlierFilter = "deltaSNP",filterThreshold = 0.1)
 ggsave(filename = "DeltaSNP.png",plot = last_plot())
 
 ```
