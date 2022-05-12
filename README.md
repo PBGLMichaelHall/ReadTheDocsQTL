@@ -44,7 +44,14 @@ Plot Independent Allelic Frequencies from High and Low Bulk with SNP position us
 # Correlation
 This function takes a VCF file and a chromosome list and plots correlation related plots.
 
+# QTLseqr::AlleleFreqSlidingWindow
+i.e.
 
+```r
+
+QTLseqr::AlleleFreqSlidingWindow(vcf = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf",chromList =  c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1"), windowSize = 1000000, highBulk ="ET-pool-385", lowBulk = "ES-pool-430", filename = "Rice101", threshold = .66)
+
+```
 
 ### **For more detailed instructions please read the vignette [here](https://github.com/bmansfeld/QTLseqr/raw/master/vignettes/QTLseqr.pdf)**
 
