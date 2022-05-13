@@ -204,12 +204,12 @@ library(ggplot2)
 ``` r 
 setwd("/home/michael/Desktop/QTLseqr/extdata")
 ```
-# Vcf file must only contain bialleleic variants and Pure SNPs. (filter upstream, e.g., with bcftools view -v snps -m2 -M2), also the QTLseqR functions will only take SNPS, ie, length of REF and ALT== 1
+# Vcf file must only contain bialleleic variants and Pure SNPs. (filter upstream, e.g., with bcftools view -v snps -m2 -M2), also the QTLseqR functions will only take SNPS, ie, length of REF and ALT== 1. In addition, importFromVCF has another filter boolean value of TRUE or FALSE. If TRUE it filters to include only variants that have PASS in the FILTER INFO field. 
 
 ```r
 # Invoke importFromVCF function and produce a .CSV file
 
-importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",lowBulk = "D2_F2_TT",chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10"),filename = "Hall")
+importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",lowBulk = "D2_F2_TT",chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10"),filename = "Hall",filter=TRUE)
 
 ```
 ![importVCF](https://user-images.githubusercontent.com/93121277/165956202-7ea2d997-6506-4e66-a1da-4e0510736c7e.png)
