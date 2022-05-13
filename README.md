@@ -967,10 +967,5 @@ Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = 8, threshold = .75)
 ![LB3](https://user-images.githubusercontent.com/93121277/158788921-b35622eb-9926-4c0b-9b6b-fd06c71dc0c2.png)
 ![HB3](https://user-images.githubusercontent.com/93121277/158789001-69b463a5-56df-44f6-94a7-7d016c795833.png)
 
-# Investigate SNP@POS 24525659
-![header](https://user-images.githubusercontent.com/93121277/158789386-a163d764-607b-4a4c-8884-11ce4a9debb0.png)
-![values](https://user-images.githubusercontent.com/93121277/158789420-806f5cfe-ed44-48b7-80fa-f738eaf7a5e8.png)
-
-
 
 
