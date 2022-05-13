@@ -37,6 +37,8 @@ i.e.
 QTLseqr::Obs_Allele_Freq(SNPSet = df_filt, size = .001)
 
 ```
+![obs](https://user-images.githubusercontent.com/93121277/168235788-1e5dbbd7-ce25-4373-921c-5a6677058642.png)
+
 
 # Obs_Allele_Freq2
 Plot Independent Allelic Frequencies from High and Low Bulk with SNP position used as identifiers. Also returns a sorted data frame with Gprime statistic decending. The idea is to compare Allelic Frequencies from each bulk with Gprime Statistic for SNP called. The threhold argument is the magnitude of difference between Allelic frequencies inherited from the high parent in the High Bulk and Allelic Frequencies inherited from the high parent in the Low Bulk. It is curretly set at 66% due to the expectation that the High Bulk will have an extremely enriched allele content in a significant Quantitative Trait Locus where 100% of the Alleles are called to be homozygous recessive. While assuming heterzygous alleles have not been filtered out the expectation will tend towards 33% in mendellian fashion, and so the difference is 66% approximately. However, in this case heterzygous calls have been filtered and the trait is determined to be recessive due to ratio patterns in offspring from the F2 generation. So, we can expect to see the highbulk trending towards 100% and the low bulk trending towards 0%.
@@ -49,6 +51,9 @@ QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "Chr04", threshold
 
 ```
 ![obsfreq2](https://user-images.githubusercontent.com/93121277/168234078-7ed348c3-bcf1-41ba-86f1-efb7d125340a.png)
+
+
+![chart](https://user-images.githubusercontent.com/93121277/168235561-f3e518d5-7d9b-494f-a8aa-96a4cf6bb00a.png)
 
 
 
@@ -64,6 +69,12 @@ Required libraries:
 
 ```
 
+```r
+
+table <- QTLseqr::Correlation(vcffile = "SNPS_ONLY.freebayes_D2.filtered.vcf.gz", chromlist =  c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10"), p1 = FALSE, p2 = FALSE, p3 = FALSE, p4 = FALSE, p5 = TRUE)
+
+
+```
 
 
 # Due to limitation on R Memory I recommend to use one plot at a time.
@@ -79,22 +90,21 @@ Or if you like heatmaps do plot 5, p5 = TRUE.
 ![heatmap](https://user-images.githubusercontent.com/93121277/168233848-c7e67d6a-2812-4da5-933b-fcb9a1438d28.png)
 
 
-```r
 
-pdf(Correlation.pdf)
-QTLseqr::Correlation(vcffile = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf", chromlist =  c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1"), p1 = TRUE, p2 = FALSE, p3 = FALSE, p4 = FALSE, p5 = FALSE)
-dev.off()
-
-```
 
 # AlleleFreqSlidingWindow
 i.e.
 
 ```r
 
-QTLseqr::AlleleFreqSlidingWindow(vcf = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf",chromList =  c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1"), windowSize = 1000000, highBulk ="ET-pool-385", lowBulk = "ES-pool-430", filename = "Rice101", threshold = .66)
+pdf(file = "Sorghum101.pdf")
+QTLseqr::AlleleFreqSlidingWindow(vcf = "SNPS_ONLY.freebayes_D2.filtered.vcf.gz",chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10") , windowSize = 1000000, highBulk ="D2_F2_tt", lowBulk = "D2_F2_TT", filename = "Sorghum101", threshold = .66)
+dev.off()
 
 ```
+![plot](https://user-images.githubusercontent.com/93121277/168237187-1960c835-acee-4e12-bffd-1c96612681eb.png)
+
+
 
 ### **For more detailed instructions please read the vignette [here](https://github.com/bmansfeld/QTLseqr/raw/master/vignettes/QTLseqr.pdf)**
 
