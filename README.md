@@ -19,8 +19,12 @@ https://qtl-bsa.readthedocs.io/en/latest/Sorghum.html
 
 
 # I have added the following functions to the QTLseqr package:
+- it provides cut off values for G-Prime Statistic and neglog
+- Prints a csv file of ONLY G-prime Significant Variants
+- In this case, Rice has called 32,771 significant variants with respect to G Prime Statistic
 
 # plotQTLStats_MH
+
 
 
 ```r
@@ -31,6 +35,7 @@ plotQTLStats_MH(SNPset = df_filt2, var = "Gprime", plotThreshold = TRUE, q = 0.0
 
 ![hidden_Variables](https://user-images.githubusercontent.com/93121277/168254018-6869143b-1ecd-4029-8fd3-fa1c3771231b.png)
 
+![print](https://user-images.githubusercontent.com/93121277/168260947-c35711c0-2c7a-4555-8976-20d666ad4afe.png)
 
 # tricube_Smooth 
 Uses Local Regression, Likelihood and Density Estimation and a Local Polynomial Model Term to filter out noise in the data.
