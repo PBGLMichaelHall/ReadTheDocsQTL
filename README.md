@@ -39,17 +39,21 @@ QTLseqr::Obs_Allele_Freq(SNPSet = df_filt, size = .001)
 ```
 
 # Obs_Allele_Freq2
-Plot Independent Allelic Frequencies from High and Low Bulk with SNP position used as identifiers. Also returns a sorted data frame with Gprime statistic decending. The idea is to compare Allelic Frequencies from each bulk with Gprime Statistic for SNP called. 
+Plot Independent Allelic Frequencies from High and Low Bulk with SNP position used as identifiers. Also returns a sorted data frame with Gprime statistic decending. The idea is to compare Allelic Frequencies from each bulk with Gprime Statistic for SNP called. The threhold argument is the magnitude of difference between Allelic frequencies inherited from the high parent in the High Bulk and Allelic Frequencies inherited from the high parent in the Low Bulk. It is curretly set at 66% due to the expectation that the High Bulk will have an extremely enriched allele content in a significant Quantitative Trait Locus where 100% of the Alleles are called to be homozygous recessive. While assuming heterzygous alleles have not been filtered out the expectation will tend towards 33% in mendellian fashion, and so the difference is 66% approximately. However, in this case heterzygous calls have been filtered and the trait is determined to be recessive due to ratio patterns in offspring from the F2 generation. So, we can expect to see the highbulk trending towards 100% and the low bulk trending towards 0%.
 
 i.e.
 
 ```r
 
-QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = 8, threshold = .66)
+QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "Chr04", threshold = .66)
 
 ```
+![obsfreq2](https://user-images.githubusercontent.com/93121277/168234078-7ed348c3-bcf1-41ba-86f1-efb7d125340a.png)
+
+
+
 # Correlation
-This function takes a VCF file and a chromosome list and plots correlation related plots.
+This function takes a VCF file and a chromosome list and plots correlation related plots. 
 Required libraries:
 
 ```r
@@ -66,6 +70,14 @@ Required libraries:
 i.e. 
 
 p1 = TRUE, p2 = FALSE,......etc.
+For example, plot 4, p4 = TRUE gives this plot, distributions and correlations of certain info fields.
+
+![correlation](https://user-images.githubusercontent.com/93121277/168233558-f5e15dd8-e962-4c81-b16d-b938490428a0.png)
+
+Or if you like heatmaps do plot 5, p5 = TRUE.
+
+![heatmap](https://user-images.githubusercontent.com/93121277/168233848-c7e67d6a-2812-4da5-933b-fcb9a1438d28.png)
+
 
 ```r
 
