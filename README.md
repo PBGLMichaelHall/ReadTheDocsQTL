@@ -17,7 +17,7 @@ I have forked the repository to my github account and added a generic parser in 
 # Read the Docs
 https://qtl-bsa.readthedocs.io/en/latest/Sorghum.html
 
-# Why this tool is useful in the Sorghum case is because it takes 7861 Called Variants and reduces it to 92 total variants. You can also filter by allelic frequency differences however there is not really a valid statistic to determine significance.
+# Why this tool is useful in the Sorghum case is because it takes 7861 Called Variants and reduces it to 92 total variants dispersed on Chromosomes 1,3,4,6,7, and 9 . You can also filter by allelic frequency differences however there is not really a valid statistic to determine significance.
 
 # I have added the following functions to the QTLseqr package:
 - it provides cut off values for G-Prime Statistic and neglog
