@@ -958,14 +958,15 @@ getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = "my_BSA_Q
 
 # Filter Low Allelic Depth Frequencies
 ```r
-##Use the function to investigate chromosomal region of interest
-Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = 8, threshold = .75)
+
+pdf(file = "Rice10101.pdf")
+Obs_Allele_Freq2(SNPSet = df_filt2, ChromosomeValue = "NC_029263.1", threshold = .85)
+dev.off()
 
 ```
 
 # Preview the plot with idenitfied SNP positions
-![LB3](https://user-images.githubusercontent.com/93121277/158788921-b35622eb-9926-4c0b-9b6b-fd06c71dc0c2.png)
-![HB3](https://user-images.githubusercontent.com/93121277/158789001-69b463a5-56df-44f6-94a7-7d016c795833.png)
 
+![obs9](https://user-images.githubusercontent.com/93121277/168242146-7b92a7aa-c8b6-4d49-8dec-d70eba1e4f53.png)
 
 
