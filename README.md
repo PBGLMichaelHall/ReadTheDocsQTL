@@ -20,6 +20,17 @@ https://qtl-bsa.readthedocs.io/en/latest/Sorghum.html
 
 # I have added the following functions to the QTLseqr package:
 
+# plotQTLStats_MH
+
+
+```r
+
+plotQTLStats_MH(SNPset = df_filt2, var = "Gprime", plotThreshold = TRUE, q = 0.01)
+
+```
+
+![hidden_Variables](https://user-images.githubusercontent.com/93121277/168254018-6869143b-1ecd-4029-8fd3-fa1c3771231b.png)
+
 
 # tricube_Smooth 
 Uses Local Regression, Likelihood and Density Estimation and a Local Polynomial Model Term to filter out noise in the data.
