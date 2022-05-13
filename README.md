@@ -396,6 +396,19 @@ plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subse
 ```
 ![Screenshot from 2022-04-01 15-24-01](https://user-images.githubusercontent.com/93121277/161272349-3c9bcf3e-553c-43a5-af5d-6b1e80e99658.png)
 
+# Now to find some hidden variables
+
+```r
+
+QTLseqr::plotQTLStats_MH(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE, q = 0.01)
+
+```
+# Even though there appears to be a signal on the whole chromosome 4, it actually only calls a total of 92 G-Prime Significant Variants.
+
+![1](https://user-images.githubusercontent.com/93121277/168262569-345e5f13-2078-41b6-b5f4-2bb3c208db8e.png)
+![2](https://user-images.githubusercontent.com/93121277/168262589-3f42e166-de1b-4f7c-8891-83096b08ee23.png)
+
+
 # Use RMVP package to view SNPs on chromosomes/contigs
 
 ```r
