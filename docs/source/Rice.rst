@@ -208,6 +208,8 @@ importFromVCF
    
    df <- importFromVCF(file = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf",highBulk = "ET-pool-385",lowBulk = "ES-pool-430",chromList = Chroms,filename = "Hall",filter = FALSE)
    
+.. figure:: ../images/gatkheader3.png
+   
 GATK
 ----
 
