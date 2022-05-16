@@ -188,6 +188,8 @@ importFromGATK
 
    python gatk --help
 
+
+
 .. figure:: ../images/gatkhelp.png
    :alt: 
 
@@ -195,6 +197,9 @@ importFromGATK
 
    python gatk --list
    
+::
+
+
    *Base Calling:*
    *Copy Number Variant Discovery:*
    *Coverage Analyis:*
@@ -213,7 +218,10 @@ importFromGATK
    *Variant Filtering:*
    *Variant Manipulation:*
    
-   .. figure:: ../images/gatk2.png
+# We are most concerned with **Variant Evaluation and Refinement**
+
+   
+.. figure:: ../images/gatk2.png
    :alt: 
    
    
