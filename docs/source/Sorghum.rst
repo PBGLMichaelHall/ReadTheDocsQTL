@@ -143,7 +143,7 @@ Pre-Filtering Rules
 
 .. code:: r
 
-   Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTLseqR functions will only take    SNPS, ie, length of REF and ALT== 1
+   Vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -v snps -m2 -M2), also the QTLseqR functions will only take    SNPS, ie, length of REF and ALT== 1
 
 ::
 
@@ -193,7 +193,28 @@ importFromGATK
 .. code:: r
 
    python gatk --list
-
+   
+   *Base Calling:*
+   *Copy Number Variant Discovery:*
+   *Coverage Analyis:*
+   *Diagnostics and Quality Control:*
+   *Example Tools:*
+   *Genotyping Arrays Manipulation:*
+   *Intervals Manipulation:*
+   *Metagenomics:*
+   *Methalation-Specific Tools:*
+   *Other:*
+   *Read Data Manipulation:*
+   *Reference:*
+   *Short Variant Discovery:*
+   *Structural Variant Discovery:*
+   *Variant Evaluation and Refinement:*
+   *Variant Filtering:*
+   *Variant Manipulation:*
+   
+   
+   
+   
 
 
    **To produce the input file Hall.table, run the following command:**
