@@ -134,7 +134,7 @@ Load/install libraries
 
 
 
-.. figure:: ../images/methods.png
+.. figure:: ../images/methods2.png
    :alt: 
 
 
