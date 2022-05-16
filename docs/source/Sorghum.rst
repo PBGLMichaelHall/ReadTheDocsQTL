@@ -5,6 +5,20 @@ QTL_BSA_Crop_Varieties
 :Author: Michael Hall
 :Date:   4/13/2022
 
+
+*Before we begin I like to reveal what my machine specifications are just in case there might be a compatibility issue:*
+
+ 
+   **What open source opeating system are you running? Ubuntu 18.04, Code name Bionic, it must be a Tuesday**
+   
+   .. code:: r   
+   
+.. figure:: ../images/WhichVersionUbuntu.png
+   :alt: 
+   
+
+
+
 QTLSorghum
 ==========
 
