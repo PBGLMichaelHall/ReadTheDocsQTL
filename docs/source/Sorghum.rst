@@ -188,7 +188,8 @@ importFromGATK
 
    python gatk --help
 
-
+.. figure:: ../images/gatkhelp.png
+   :alt: 
 
 .. code:: r
 
@@ -211,6 +212,9 @@ importFromGATK
    *Variant Evaluation and Refinement:*
    *Variant Filtering:*
    *Variant Manipulation:*
+   
+   .. figure:: ../images/gatk2.png
+   :alt: 
    
    
    
