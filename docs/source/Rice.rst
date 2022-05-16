@@ -158,7 +158,7 @@ The Lonely Parser
 
 .. code:: r 
 
-    df <- QTLParser_1_MH(vcf = "freebayes_D2.filtered.vcf", highBulk = "ET-pool-385", lowBulk = "ES-pool-430", filename = "Hall.csv")
+    df <- QTLParser_1_MH(vcf = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf", highBulk = "ET-pool-385", lowBulk = "ES-pool-430", filename = "Hall.csv")
 
 Import Data
 ===========
@@ -194,7 +194,7 @@ importFromVCF
 
    Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1")
    
-   df <- importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "ET-pool-385",lowBulk = "ES-pool-430",chromList = Chroms,filename = "Hall",filter = FALSE)
+   df <- importFromVCF(file = "wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf",highBulk = "ET-pool-385",lowBulk = "ES-pool-430",chromList = Chroms,filename = "Hall",filter = FALSE)
    
 GATK
 ----
