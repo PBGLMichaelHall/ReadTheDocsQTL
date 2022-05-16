@@ -130,6 +130,15 @@ Load/install libraries
 
 ::
 
+**Methods**
+
+
+
+.. figure:: ../images/methods.png
+   :alt: 
+
+
+
 Set the Working Directory
 -------------------------
    
