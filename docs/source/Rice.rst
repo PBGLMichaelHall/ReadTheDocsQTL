@@ -593,8 +593,8 @@ Total Coverage and Expected Allelic Frequencies
 
 
    
-Theory and Analytical Framework of Sampling from BSA
-====================================================
+Chromosomal Sampling Theory and an Analytical Framework with respect to Bulk Segregant Analysis
+===============================================================================================
 
 
 Binomial Sampling
@@ -743,7 +743,10 @@ Observed n4
    :alt: 
 
 
+An interdependentaly observed relationship between G and Gprime
+---------------------------------------------------------------
 
+.. figure:: ../images/G.png
 
 
 
