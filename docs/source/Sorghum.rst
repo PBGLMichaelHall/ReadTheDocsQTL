@@ -802,3 +802,10 @@ Observed n4
 
 
 
+
+An interdependentaly observed relationship between G and Gprime
+---------------------------------------------------------------
+
+.. figure:: ../images/G.png
+
+
