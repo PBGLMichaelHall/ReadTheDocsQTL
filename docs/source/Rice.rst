@@ -5,10 +5,22 @@ QTL_Rice_Cold_Tolerance
 :Author: Michael Hall
 :Date:   4/13/2022
 
+*Before we begin I like to reveal what my machine specifications are just in case there might be a compatibility issue:*
+
+ 
+   **What open source opeating system are you running? Ubuntu 18.04, Code name Bionic, it must be a Tuesday**
+   
+   .. code:: r   
+   
+.. figure:: ../images/WhichVersionUbuntu.png
+   :alt: 
+   
+
+
+
+
 QTL-Rice-Cold-Tolerance
 =======================
-
-
 
 
 QTLseqr is an R package for QTL mapping using NGS Bulk Segregant
@@ -211,15 +223,7 @@ GATK
 .. figure:: ../images/GATKDownload.png
    :alt: 
    
-   **Download the lastest version by clicking on gatk-4.2.6.1.zip**
-   **Extract the contents into your Downloads Folder**
-   **What open source opeating system are you running? Ubuntu 18.04, Code name Bionic, it must be a Tuesday**
-   
-   .. code:: r   
-   
-.. figure:: ../images/WhichVersionUbuntu.png
-   :alt: 
-   
+
    
    
 .. code:: r   
@@ -251,7 +255,7 @@ GATK
    **Method 1 is the most biased and therefore cuts out more SNPs than Methods 2 & 3 which produce nearly identical SNP sets.**
 
 
-.. code:: r
+
 
 
 
