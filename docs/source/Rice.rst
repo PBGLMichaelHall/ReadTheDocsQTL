@@ -142,6 +142,9 @@ Load/install libraries
 
 ::
 
+**Methods**
+
+.. figure:: ../images/methods2.png
 Set the Working Directory
 -------------------------
 
