@@ -755,7 +755,7 @@ getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = "my_BSA_Q
 
 
 
-# Filter Low Allelic Depth Frequencies
+# Filter Allelic Depth Frequencies, prefer 85% or greater.
 ```r
 
 pdf(file = "Rice10101.pdf")
