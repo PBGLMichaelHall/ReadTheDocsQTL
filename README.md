@@ -235,6 +235,10 @@ QTLseqr::importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",
 
 
 ```r
+
+QTLseqr::importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",lowBulk = "D2_F2_TT",
+chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10"),
+filename = "Hall",filter=TRUE)
 #Set High bulk and Low bulk sample names and parser generated file name
 #The file name is generated from the QTLParser_1_MH function in line 119
 
@@ -254,6 +258,43 @@ df <-
     chromList = chromList
     sep = ","
   ) 
+  
+#Filter SNPs based on some criteria
+df_filt <-
+  QTLseqr::filterSNPs(
+    SNPset = df,
+    refAlleleFreq = 0.20,
+    minTotalDepth = 100,
+    maxTotalDepth = 400,
+    minSampleDepth = 40,
+             minGQ = 99,
+    verbose = TRUE
+  )
+  
+ #Run G' analysis
+df_filt<-QTLseqr::runGprimeAnalysis(
+  SNPset = df_filt,
+  windowSize = 5000000,
+  outlierFilter = "deltaSNP",
+  filterThreshold = 0.1)
+  
+ #Run QTLseq analysis
+df_filt <- QTLseqr::runQTLseqAnalysis(
+  SNPset = df_filt,
+  windowSize = 5000000,
+  popStruc = "F2",
+  bulkSize = c(45, 38),
+  replications = 10000,
+  intervals = c(95, 99)
+)
+
+#Plot
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE, q = 0.01)
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "deltaSNP", plotIntervals  = TRUE)
+
+#export summary CSV
+QTLseqr::getQTLTable(SNPset = df_filt, alpha = 0.01, export = TRUE, fileName = "my_BSA_QTL.csv")
+
 
 ```
 
@@ -794,4 +835,5 @@ QTLseqr::getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = 
 ![rice9](https://user-images.githubusercontent.com/93121277/170500356-b3f9f70f-e2ae-4476-9bae-98b6d701388c.png)
 ![rice10](https://user-images.githubusercontent.com/93121277/170500366-cdab063c-7c47-419c-9f68-28a8b42934cd.png)
 
+![preview7](https://user-images.githubusercontent.com/93121277/170502030-4c652f70-a09b-48f8-af48-44f7e4eafe8d.png)
 
