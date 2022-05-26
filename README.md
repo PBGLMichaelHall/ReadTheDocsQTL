@@ -285,9 +285,23 @@ ggsave(filename = "Ref_Freq_Histogram.png",plot = last_plot())
 
 ![hist4](https://user-images.githubusercontent.com/93121277/156784371-a96fcac0-fe21-43de-ad6c-568c69e3d25a.png)
 
+```r
 
+ggplot(data = df) + geom_histogram(aes(x = DP.LOW))
 
-``` r {r Filtering, warning = FALSE}
+```
+
+![dpLow](https://user-images.githubusercontent.com/93121277/170448999-976f0cd6-2fa7-4401-8a36-f5059565bfa1.png)
+
+```r
+
+ggplot(data = df) + geom_histogram(aes(x = DP.HIGH))
+
+```
+
+![dpHigh](https://user-images.githubusercontent.com/93121277/170449550-d4fbe07f-aff3-4b5e-b514-96afb13d9892.png)
+
+``` r 
 
 #Filter SNPs based on some criteria
 df_filt <-
@@ -768,9 +782,6 @@ dev.off()
 
 ![obs9](https://user-images.githubusercontent.com/93121277/168242146-7b92a7aa-c8b6-4d49-8dec-d70eba1e4f53.png)
 
-![dpLow](https://user-images.githubusercontent.com/93121277/170448999-976f0cd6-2fa7-4401-8a36-f5059565bfa1.png)
-
-![dpHigh](https://user-images.githubusercontent.com/93121277/170449550-d4fbe07f-aff3-4b5e-b514-96afb13d9892.png)
 
 
 
