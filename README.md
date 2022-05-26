@@ -330,10 +330,10 @@ df_filt <-
     minTotalDepth = 100,
     maxTotalDepth = 400,
     minSampleDepth = 40,
-    #    minGQ = 0
+             minGQ = 99,
+    verbose = TRUE
   )
 ```
-![dffilt](https://user-images.githubusercontent.com/93121277/165956705-0faa10da-4fc2-4cfe-bc2c-b1bf8b51cdb2.png)
 
 
 
