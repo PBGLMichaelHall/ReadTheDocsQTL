@@ -770,4 +770,22 @@ dev.off()
 
 ![dpLow](https://user-images.githubusercontent.com/93121277/170448999-976f0cd6-2fa7-4401-8a36-f5059565bfa1.png)
 
-![dpHigh](https://user-images.githubusercontent.com/93121277/170448980-4027d98a-8737-42ea-b25a-24618da27f9f.png)
+![dpHigh](https://user-images.githubusercontent.com/93121277/170449550-d4fbe07f-aff3-4b5e-b514-96afb13d9892.png)
+
+
+
+
+![GQlow](https://user-images.githubusercontent.com/93121277/170449603-9ce8d582-f2b6-4550-8a86-7fed616fc962.png)
+
+
+
+
+
+![GQHigh](https://user-images.githubusercontent.com/93121277/170449502-f0833ddc-85cb-465c-928b-5a6013ddeee8.png)
+
+
+
+
+
+
+
