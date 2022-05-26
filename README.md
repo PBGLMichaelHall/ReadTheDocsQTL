@@ -64,13 +64,10 @@ i.e.
 
 ```r
 
-QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "Chr04", threshold = .66)
+QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = c("Chr3","Chr04","Chr07"), threshold = 0, pvalueThresh = 0.05)
 
 ```
-![obsfreq2](https://user-images.githubusercontent.com/93121277/168234078-7ed348c3-bcf1-41ba-86f1-efb7d125340a.png)
 
-
-![chart](https://user-images.githubusercontent.com/93121277/168235561-f3e518d5-7d9b-494f-a8aa-96a4cf6bb00a.png)
 
 
 
