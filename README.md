@@ -67,7 +67,9 @@ i.e.
 QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = c("Chr3","Chr04","Chr07"), threshold = 0, pvalueThresh = 0.05)
 
 ```
+![sigmoid](https://user-images.githubusercontent.com/93121277/170492012-73c8433d-802e-4fd1-9d0a-88655273f6d2.png)
 
+![cityslicker](https://user-images.githubusercontent.com/93121277/170492027-955009cb-4edf-4727-94ee-eaa64543f85b.png)
 
 
 
@@ -108,11 +110,11 @@ Or if you like heatmaps do plot 5, p5 = TRUE.
 
 # AlleleFreqSlidingWindow
 i.e.
-
+# Threshold is p2 - p1, or HighBulk Allele Frequency minus Low Bulk Allele Frequency
 ```r
 
 QTLseqr::AlleleFreqSlidingWindow(vcf = "SNPS_ONLY.freebayes_D2.filtered.vcf.gz",chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10") , windowSize = 1000000, highBulk ="D2_F2_tt", lowBulk = "D2_F2_TT", filename = "Sorghum101", threshold = .66)
-dev.off()
+
 
 ```
 ![plot](https://user-images.githubusercontent.com/93121277/168237187-1960c835-acee-4e12-bffd-1c96612681eb.png)
