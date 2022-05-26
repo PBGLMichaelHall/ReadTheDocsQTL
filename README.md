@@ -369,7 +369,7 @@ QTLseqr::plotGprimeDist(SNPset = df_filt, outlierFilter = "deltaSNP",filterThres
 
 
 
-``` r 
+```r 
 
 #Run QTLseq analysis
 df_filt2 <- QTLseqr::runQTLseqAnalysis(
