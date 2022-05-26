@@ -30,7 +30,7 @@ https://qtl-bsa.readthedocs.io/en/latest/Sorghum.html
 
 ```r
 
-plotQTLStats_MH(SNPset = df_filt2, var = "Gprime", plotThreshold = TRUE, q = 0.01)
+QTLseqr::plotQTLStats_MH(SNPset = df_filt2, var = "Gprime", plotThreshold = TRUE, q = 0.01)
 
 ```
 
@@ -80,9 +80,9 @@ Required libraries:
 
 ```r
 
-**library(Hmisc)** 
-**library(PerformanceAnalytics)** 
-**library(corrplot)**
+**base::library(Hmisc)** 
+**base::library(PerformanceAnalytics)** 
+**base::library(corrplot)**
 
 ```
 
@@ -114,7 +114,6 @@ i.e.
 
 ```r
 
-pdf(file = "Sorghum101.pdf")
 QTLseqr::AlleleFreqSlidingWindow(vcf = "SNPS_ONLY.freebayes_D2.filtered.vcf.gz",chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10") , windowSize = 1000000, highBulk ="D2_F2_tt", lowBulk = "D2_F2_TT", filename = "Sorghum101", threshold = .66)
 dev.off()
 
@@ -143,7 +142,7 @@ You can install QTLseqr from github with:
 
 ``` r
 # install devtools first to download packages from github
-install.packages("devtools")
+utils::install.packages("devtools")
 
 # use devtools to install QTLseqr
 devtools::install_github("PBGLMichaelHall/QTLseqr")
@@ -203,30 +202,30 @@ log10(p-values), enabling identification and plotting of QTL.
 
 ``` r {r libraries}
 devtools::install_github("PBGLMichaelHall/QTLseqr",force = TRUE)
-# install.packages("vcfR")
-# install.packages("tidyr")
-# install.packages("ggplot2")
-# install.packages("dplyr")
-# install.packages("data.table")
-library(QTLseqr)
-library(data.table)
-library(dplyr)
-library(tidyr)
-library(vcfR)
-library(ggplot2)
+# utils::install.packages("vcfR")
+# utils::install.packages("tidyr")
+# utils::install.packages("ggplot2")
+# utils::install.packages("dplyr")
+# utils::install.packages("data.table")
+base::library(QTLseqr)
+base::library(data.table)
+base::library(dplyr)
+base::library(tidyr)
+base::library(vcfR)
+base::library(ggplot2)
 
 ```
 # Set the Working Directory to where VCF file is stored in file system
 
 ``` r 
-setwd("/home/michael/Desktop/QTLseqr/extdata")
+base::setwd("/home/michael/Desktop/QTLseqr/extdata")
 ```
 # Vcf file must only contain bialleleic variants and Pure SNPs. (filter upstream, e.g., with bcftools view -v snps -m2 -M2), also the QTLseqR functions will only take SNPS, ie, length of REF and ALT== 1. In addition, importFromVCF has another filter boolean value of TRUE or FALSE. If TRUE it filters to include only variants that have PASS in the FILTER INFO field. 
 
 ```r
 # Invoke importFromVCF function and produce a .CSV file
 
-importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",lowBulk = "D2_F2_TT",chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10"),filename = "Hall",filter=TRUE)
+QTLseqr::importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",lowBulk = "D2_F2_TT",chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10"),filename = "Hall",filter=TRUE)
 
 ```
 ![importVCF](https://user-images.githubusercontent.com/93121277/165956202-7ea2d997-6506-4e66-a1da-4e0510736c7e.png)
@@ -250,7 +249,7 @@ file <- "Hall.csv"
 Chroms <- c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10")
 
 df <-
-  importFromTable(
+  QTLseqr::importFromTable(
     file = file,
     highBulk = HighBulk,
     lowBulk = LowBulk,
@@ -267,9 +266,9 @@ df <-
 ```r
 #plot histograms associated with filtering arguments such as mamximum and minumum Total Depths and reference Allele Frequency to determine cut off values 
 
-ggplot(data =df) + geom_histogram(aes(x = DP.LOW + DP.HIGH)) + xlim(0,400)
+ggplot2::ggplot(data =df) + geom_histogram(aes(x = DP.LOW + DP.HIGH)) + xlim(0,400)
 
-ggsave(filename = "Depth_Histogram.png",plot=last_plot())
+ggplot2::ggsave(filename = "Depth_Histogram.png",plot=last_plot())
 
 ```
 
@@ -277,9 +276,9 @@ ggsave(filename = "Depth_Histogram.png",plot=last_plot())
 
 ```r
 
-ggplot(data = df) + geom_histogram(aes(x = REF_FRQ))
+ggplot2::ggplot(data = df) + geom_histogram(aes(x = REF_FRQ))
 
-ggsave(filename = "Ref_Freq_Histogram.png",plot = last_plot())
+ggplot2::ggsave(filename = "Ref_Freq_Histogram.png",plot = last_plot())
 
 ```
 
@@ -287,7 +286,7 @@ ggsave(filename = "Ref_Freq_Histogram.png",plot = last_plot())
 
 ```r
 
-ggplot(data = df) + geom_histogram(aes(x = DP.LOW))
+ggplot2::ggplot(data = df) + geom_histogram(aes(x = DP.LOW))
 
 ```
 
@@ -295,7 +294,7 @@ ggplot(data = df) + geom_histogram(aes(x = DP.LOW))
 
 ```r
 
-ggplot(data = df) + geom_histogram(aes(x = DP.HIGH))
+ggplot2::ggplot(data = df) + geom_histogram(aes(x = DP.HIGH))
 
 ```
 
@@ -304,7 +303,7 @@ ggplot(data = df) + geom_histogram(aes(x = DP.HIGH))
 
 ```r
 
-ggplot(data = df) + geom_histogram(aes(x = GQ.LOW))
+ggplot2::ggplot(data = df) + geom_histogram(aes(x = GQ.LOW))
 
 ```
 
@@ -314,7 +313,7 @@ ggplot(data = df) + geom_histogram(aes(x = GQ.LOW))
 
 ```r
 
-ggplot(data = df) + geom_histogram(aes(x = GQ.HIGH))
+ggplot2::ggplot(data = df) + geom_histogram(aes(x = GQ.HIGH))
 
 ```
 
@@ -326,7 +325,7 @@ ggplot(data = df) + geom_histogram(aes(x = GQ.HIGH))
 
 #Filter SNPs based on some criteria
 df_filt <-
-  filterSNPs(
+  QTLseqr::filterSNPs(
     SNPset = df,
     refAlleleFreq = 0.20,
     minTotalDepth = 100,
@@ -342,7 +341,7 @@ df_filt <-
 ```r
 
 #Run G' analysis
-df_filt<-runGprimeAnalysis(
+df_filt<-QTLseqr::runGprimeAnalysis(
   SNPset = df_filt,
   windowSize = 5000000,
   outlierFilter = "deltaSNP",
@@ -370,10 +369,10 @@ plotGprimeDist(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.
 
 
 
-``` r {r QTLSEQ, warning = FALSE}
+``` r 
 
 #Run QTLseq analysis
-df_filt2 <- runQTLseqAnalysis(
+df_filt2 <- QTLseqr::runQTLseqAnalysis(
   SNPset = df_filt,
   windowSize = 5000000,
   popStruc = "F2",
@@ -389,7 +388,7 @@ df_filt2 <- runQTLseqAnalysis(
 # Plot G Statistic Distribution
 
 ```r
-hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Histogram of G Values")
+graphics::hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Histogram of G Values")
 ```
 
 ![Screenshot from 2022-04-01 08-44-38](https://user-images.githubusercontent.com/93121277/161209927-59cd31d5-5663-4d0b-9d7d-ae6ee64a180d.png)
@@ -398,32 +397,32 @@ hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Hist
 
 ```r
 #Plot Snps as a function of chromosome and position values
-plotQTLStats(SNPset = df_filt2, var = "nSNPs")
-ggsave(filename = "nSNPs.png",plot = last_plot())
+QTLseqr::plotQTLStats(SNPset = df_filt2, var = "nSNPs")
+ggplot2::ggsave(filename = "nSNPs.png",plot = last_plot())
 ```
 ![Screenshot from 2022-04-01 15-20-34](https://user-images.githubusercontent.com/93121277/161271810-6709f553-1361-4f4d-a6f4-3f11eca4a8c9.png)
 
 
 ```r
 #Using QTLStats funciton plot Gprime Statistic with False Discovery Rate Threhshold as a third argument boolean operator as TRUE. The q value is used as FDR threshold null value is 0.05%.
-plotQTLStats(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE, q = 0.01)
-ggsave(filename = "GPrime.png",plot = last_plot())
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE, q = 0.01)
+ggplot2::ggsave(filename = "GPrime.png",plot = last_plot())
 ```
 ![Screenshot from 2022-04-01 15-21-27](https://user-images.githubusercontent.com/93121277/161271924-e1e6319b-be94-440f-8898-76849c583edd.png)
 
 
 ```r
 #Again using plotQTLStats change second argument varaible to deltaSNP and plot.
-plotQTLStats(SNPset = df_filt2, var = "deltaSNP", plotIntervals  = TRUE)
-ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
+QTLseqr::plotQTLStats(SNPset = df_filt2, var = "deltaSNP", plotIntervals  = TRUE)
+ggplot2::ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
 ```
 
 ![Screenshot from 2022-04-01 15-22-05](https://user-images.githubusercontent.com/93121277/161272031-d384dad1-c471-43bf-96d5-2e6cc05d2cfd.png)
 
 ```r
 #Finally with plotQTLStats plot negLog10Pval
-plotQTLStats(SNPset = df_filt2, var = "negLog10Pval",plotThreshold = TRUE,q=0.01)
-ggsave(filename = "negLog10Pval.png",plot = last_plot())
+QTLseqr::plotQTLStats(SNPset = df_filt2, var = "negLog10Pval",plotThreshold = TRUE,q=0.01)
+ggplot2::ggsave(filename = "negLog10Pval.png",plot = last_plot())
 ```
 ![Screenshot from 2022-04-01 15-22-41](https://user-images.githubusercontent.com/93121277/161272116-144fb1c9-78a1-4c7c-9a7c-96b1a1e0b664.png)
 
@@ -431,7 +430,7 @@ ggsave(filename = "negLog10Pval.png",plot = last_plot())
 ```r
 #Add subset argument to focus on particular chromosomes one, three, four, and six.
 #The reason is due to signficant QTL regions
-plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subset = c("Chr01","Chr03","Chr04","Chr06"))
+QTLseqr::plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subset = c("Chr01","Chr03","Chr04","Chr06"))
 
 ```
 ![Screenshot from 2022-04-01 15-24-01](https://user-images.githubusercontent.com/93121277/161272349-3c9bcf3e-553c-43a5-af5d-6b1e80e99658.png)
@@ -453,25 +452,25 @@ QTLseqr::plotQTLStats_MH(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE,
 
 ```r
 
-install.packages("rMVP")
-library(rMVP)
+utils::install.packages("rMVP")
+base::library(rMVP)
 sample<-"Semi_Dwarfism_in_Sorghum"
 pathtosample <- "/home/michael/Desktop/QTLseqr/extdata/subset_freebayes_D2.filtered.vcf.gz"
-out<- paste0("mvp.",sample,".vcf")
-memo<-paste0(sample)
+out<- base::paste0("mvp.",sample,".vcf")
+memo<-base::paste0(sample)
 dffile<-paste0("mvp.",sample,".vcf.geno.map")
 
-message("Making MVP data S1")
-MVP.Data(fileVCF=pathtosample,
+base::message("Making MVP data S1")
+rMVP::MVP.Data(fileVCF=pathtosample,
       #filePhe="Phenotype.txt",
       fileKin=FALSE,
       filePC=FALSE,
       out=out)
 
-message("Reading MVP Data S1")
-df <- read.table(file = dffile, header=TRUE)
-message("Making SNP Density Plots")
-MVP.Report.Density(df[,c(1:3)], bin.size = 5000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
+base::message("Reading MVP Data S1")
+df <- utils::read.table(file = dffile, header=TRUE)
+base::message("Making SNP Density Plots")
+rMVP::MVP.Report.Density(df[,c(1:3)], bin.size = 5000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
 
 ```
 
@@ -484,7 +483,7 @@ MVP.Report.Density(df[,c(1:3)], bin.size = 5000000, col = c("blue", "yellow", "r
 
 
 ```r
-QTLTable(SNPset = df_filt, alpha = 0.01, export = TRUE, fileName = "my_BSA_QTL.csv")
+QTLseqr::getQTLTable(SNPset = df_filt, alpha = 0.01, export = TRUE, fileName = "my_BSA_QTL.csv")
 ```
 # Preview the Summary QTL
 
@@ -493,7 +492,7 @@ QTLTable(SNPset = df_filt, alpha = 0.01, export = TRUE, fileName = "my_BSA_QTL.c
 ``` r
 #Use the function to plot allele frequencies per chromosome
 #Second argument size specifes size of scalar factor on nSNPs and if you have a relatively small SNP set .001 is a good startin point otherwise set to 1
-Obs_Allele_Freq(SNPSet = df_filt, size = .001)
+QTLseqr::Obs_Allele_Freq(SNPSet = df_filt, size = .001)
 ```
 
 ![Screenshot from 2022-04-01 12-38-33](https://user-images.githubusercontent.com/93121277/161247921-2fab6d12-6b11-433a-af3b-a5c969aabc8a.png)
@@ -512,14 +511,18 @@ base::plot(df_filt2$pvalue, pch = 20, col = "blue", xlab = "index", ylab = "pval
 
 ```
 
+
+
 ![hist](https://user-images.githubusercontent.com/93121277/170462211-f2848b2e-40a0-412b-8b28-dc07f94df1aa.png)
+
+**After pvalue filter only 96 variants remain**
 ![density](https://user-images.githubusercontent.com/93121277/170462221-aa24e5f0-4838-4738-8054-eb797ef452d0.png)
 ![pvalue](https://user-images.githubusercontent.com/93121277/170462231-2b7cba53-3ac7-4d3a-9d5d-353628be1196.png)
 
 
 ``` r
 ##Use the function to investigate chromosomal region of interest
-Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = c("Chr01","Chr02","Chr03","Chr04","Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", threshold = 0, pvalueThresh = 0.05)
+QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = c("Chr01","Chr02","Chr03","Chr04","Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", threshold = 0, pvalueThresh = 0.05)
 ```
 
 ![pvalueSIG](https://user-images.githubusercontent.com/93121277/170471126-2f31504b-e067-4992-8e6d-48b802a2387c.png)
@@ -548,21 +551,21 @@ Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = c("Chr01","Chr02","Chr03","
 ```r
 sample<-"RiceColdTolerance"
 pathtosample <- "/home/michael/Desktop/RiceCold2/wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf"
-out<- paste0("mvp.",sample,".vcf")
-memo<-paste0(sample)
-dffile<-paste0("mvp.",sample,".vcf.geno.map")
+out<- base::paste0("mvp.",sample,".vcf")
+memo<-base::paste0(sample)
+dffile<-base::paste0("mvp.",sample,".vcf.geno.map")
 
-message("Making MVP data S1")
-MVP.Data(fileVCF=pathtosample,
+base::message("Making MVP data S1")
+rMVP::MVP.Data(fileVCF=pathtosample,
          #filePhe="Phenotype.txt",
          fileKin=FALSE,
          filePC=FALSE,
          out=out
 )
-message("Reading MVP Data S1")
-df <- read.table(file = dffile, header=TRUE)
-message("Making SNP Density Plots")
-MVP.Report.Density(df[,c(1:3)], bin.size = 1000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
+base::message("Reading MVP Data S1")
+df <- utils::read.table(file = dffile, header=TRUE)
+base::message("Making SNP Density Plots")
+rMVP::MVP.Report.Density(df[,c(1:3)], bin.size = 1000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
 
 ```
 ![Screenshot from 2022-04-12 14-34-01](https://user-images.githubusercontent.com/93121277/162963811-7fc215c6-ad65-4a01-b4b9-94aebed3e112.png)
@@ -572,7 +575,7 @@ MVP.Report.Density(df[,c(1:3)], bin.size = 1000000, col = c("blue", "yellow", "r
 
 
 #Set Working Directory
-setwd("/home/michael/Desktop/RiceCold2")
+base::setwd("/home/michael/Desktop/RiceCold2")
 
 # vcf file must only contain bialleleic variants. (filter upstream, e.g., with bcftools view -m2 -M2), also the QTL-Rice-Cold functions will only take SNPS, ie, length of REF and ALT== 1
 
@@ -606,7 +609,7 @@ Chroms <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1
 
 
 df <-
-  importFromGATK(
+  QTLseqr::importFromGATK(
     file = file,
     highBulk = HighBulk,
     lowBulk = LowBulk,
@@ -626,16 +629,16 @@ df <-
 
 ```r
 
-ggplot(data =df) +geom_histogram(aes(x = DP.LOW + DP.HIGH)) + xlim(0,400)
-ggsave(filename = "Depth_Histogram.png",plot=last_plot())
+ggplot2::ggplot(data =df) +geom_histogram(aes(x = DP.LOW + DP.HIGH)) + xlim(0,400)
+ggplot2::ggsave(filename = "Depth_Histogram.png",plot=last_plot())
 
 ```
 ![dplowhigh](https://user-images.githubusercontent.com/93121277/158780363-0939b60a-4a19-4104-b435-e352d715f5df.png)
 
 ```r
 
-ggplot(data = df) +geom_histogram(aes(x = REF_FRQ))
-ggsave(filename = "Ref_Freq_Histogram.png",plot = last_plot())
+ggplot2::ggplot(data = df) +geom_histogram(aes(x = REF_FRQ))
+ggplot2::ggsave(filename = "Ref_Freq_Histogram.png",plot = last_plot())
 
 ```
 
@@ -648,7 +651,7 @@ ggsave(filename = "Ref_Freq_Histogram.png",plot = last_plot())
 
 #Filter SNPs based on some criteria
 df_filt <-
-  filterSNPs(
+  QTLseqr::filterSNPs(
     SNPset = df,
     refAlleleFreq = 0.20,
     minTotalDepth = 100,
@@ -664,7 +667,7 @@ df_filt <-
 
 ```r
 #Run G' analysis
-df_filt<-runGprimeAnalysis(
+df_filt<- QTLseqr::runGprimeAnalysis(
   SNPset = df_filt,
   windowSize = 1e6,
   outlierFilter = "deltaSNP",
@@ -679,7 +682,7 @@ df_filt<-runGprimeAnalysis(
 
 
 #Run QTLseq analysis
-df_filt2 <- runQTLseqAnalysis(
+df_filt2 <- QTLseqr::runQTLseqAnalysis(
   SNPset = df_filt,
   windowSize = 1e6,
   popStruc = "F2",
@@ -693,7 +696,7 @@ df_filt2 <- runQTLseqAnalysis(
 
 # Plot G Statistic Distribution
 ```r
-hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Histogram of G Values")
+graphics::hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Histogram of G Values")
 ```
 ![gstat](https://user-images.githubusercontent.com/93121277/158780626-0dd9efaa-8c2b-448e-8e22-ce94a1ff6fbf.png)
 
@@ -701,8 +704,8 @@ hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Hist
 ```r
 
 # G' Distribution Plot
-plotGprimeDist(SNPset = df_filt2, outlierFilter = "Hampel")
-ggsave(filename = "Hampel_GPrime.png",plot = last_plot())
+QTLseqr::plotGprimeDist(SNPset = df_filt2, outlierFilter = "Hampel")
+ggplot2::ggsave(filename = "Hampel_GPrime.png",plot = last_plot())
 
 ```
 
@@ -712,8 +715,8 @@ ggsave(filename = "Hampel_GPrime.png",plot = last_plot())
 ```r
 
 
-plotGprimeDist(SNPset = df_filt2, outlierFilter = "deltaSNP",filterThreshold = 0.1)
-ggsave(filename = "DeltaSNP.png",plot = last_plot())
+QTLseqr::plotGprimeDist(SNPset = df_filt2, outlierFilter = "deltaSNP",filterThreshold = 0.1)
+ggplot2::ggsave(filename = "DeltaSNP.png",plot = last_plot())
 
 ```
 
@@ -724,8 +727,8 @@ ggsave(filename = "DeltaSNP.png",plot = last_plot())
 
 
 #make the Plot
-plotQTLStats(SNPset = df_filt2, var = "nSNPs")
-ggsave(filename = "nSNPs.png",plot = last_plot())
+QTLseqr::plotQTLStats(SNPset = df_filt2, var = "nSNPs")
+ggplot2::ggsave(filename = "nSNPs.png",plot = last_plot())
 
 
 ```
@@ -737,8 +740,8 @@ ggsave(filename = "nSNPs.png",plot = last_plot())
 
 
 ```r
-plotQTLStats(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE, q = 0.01)
-ggsave(filename = "GPrime.png",plot = last_plot())
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE, q = 0.01)
+ggplot2::ggsave(filename = "GPrime.png",plot = last_plot())
 
 ```
 
@@ -746,8 +749,8 @@ ggsave(filename = "GPrime.png",plot = last_plot())
 
 
 ```r
-plotQTLStats(SNPset = df_filt2, var = "deltaSNP", plotIntervals  = TRUE)
-ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
+QTLseqr::plotQTLStats(SNPset = df_filt2, var = "deltaSNP", plotIntervals  = TRUE)
+ggplot2::ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
 
 ```
 ![Screenshot from 2022-04-01 10-39-24](https://user-images.githubusercontent.com/93121277/161227673-447d11f9-1245-4042-affd-56ca43c39799.png)
@@ -757,8 +760,8 @@ ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
 
 
 ```r
-plotQTLStats(SNPset = df_filt2, var = "negLog10Pval",plotThreshold = TRUE,q=0.01,subset = c("NC_029256.1","NC_029257.1","NC_029263.1","NC_029265.1"))
-ggsave(filename = "negLog10Pval.png",plot = last_plot())
+QTLseqr::plotQTLStats(SNPset = df_filt2, var = "negLog10Pval",plotThreshold = TRUE,q=0.01,subset = c("NC_029256.1","NC_029257.1","NC_029263.1","NC_029265.1"))
+ggplot2::ggsave(filename = "negLog10Pval.png",plot = last_plot())
 
 ```
 ![Screenshot from 2022-04-01 10-05-35](https://user-images.githubusercontent.com/93121277/161222325-69f4ad58-8fb8-4eb7-bc91-fc900be47416.png)
@@ -766,7 +769,7 @@ ggsave(filename = "negLog10Pval.png",plot = last_plot())
 
 ```r
 
-plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subset = c("NC_029256.1","NC_029257.1","NC_029263.1","NC_029265.1"))
+QTLseqr::plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subset = c("NC_029256.1","NC_029257.1","NC_029263.1","NC_029265.1"))
 
 ```
 ![Screenshot from 2022-04-01 10-06-19](https://user-images.githubusercontent.com/93121277/161222339-dbbafc12-0631-4d22-b477-5f038256ee6e.png)
@@ -775,21 +778,21 @@ plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subse
 ```r
 sample<-"RiceColdTolerance"
 pathtosample <- "/home/michael/Desktop/RiceCold2/wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf"
-out<- paste0("mvp.",sample,".vcf")
-memo<-paste0(sample)
-dffile<-paste0("mvp.",sample,".vcf.geno.map")
+out<- base::paste0("mvp.",sample,".vcf")
+memo<-base::paste0(sample)
+dffile<-base::paste0("mvp.",sample,".vcf.geno.map")
 
-message("Making MVP data S1")
-MVP.Data(fileVCF=pathtosample,
+base::message("Making MVP data S1")
+rMVP::MVP.Data(fileVCF=pathtosample,
          #filePhe="Phenotype.txt",
          fileKin=FALSE,
          filePC=FALSE,
          out=out
 )
-message("Reading MVP Data S1")
-df <- read.table(file = dffile, header=TRUE)
-message("Making SNP Density Plots")
-MVP.Report.Density(df[,c(1:3)], bin.size = 1000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
+base::message("Reading MVP Data S1")
+df <- utils::read.table(file = dffile, header=TRUE)
+base::message("Making SNP Density Plots")
+rMVP::MVP.Report.Density(df[,c(1:3)], bin.size = 1000000, col = c("blue", "yellow", "red"), memo = memo, file.type = "jpg", dpi=300)
 
 ```
 ![Screenshot from 2022-04-12 14-34-01](https://user-images.githubusercontent.com/93121277/162963811-7fc215c6-ad65-4a01-b4b9-94aebed3e112.png)
@@ -799,7 +802,7 @@ MVP.Report.Density(df[,c(1:3)], bin.size = 1000000, col = c("blue", "yellow", "r
 # Export summary CSV
 ```r
 
-getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = "my_BSA_QTL.csv")
+QTLseqr::getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = "my_BSA_QTL.csv")
 ```
 # Preview the QTL Summary
 ![Screenshot from 2022-04-01 09-58-43](https://user-images.githubusercontent.com/93121277/161220947-979d5bbf-8438-4110-a950-a33224878a01.png)
@@ -809,9 +812,8 @@ getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = "my_BSA_Q
 # Filter Allelic Depth Frequencies, prefer 85% or greater.
 ```r
 
-pdf(file = "Rice10101.pdf")
-Obs_Allele_Freq2(SNPSet = df_filt2, ChromosomeValue = "NC_029263.1", threshold = .85)
-dev.off()
+QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt2, ChromosomeValue = "NC_029263.1", threshold = .85)
+
 
 ```
 
