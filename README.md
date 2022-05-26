@@ -791,5 +791,7 @@ QTLseqr::getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = 
 
 
 ![ricedd](https://user-images.githubusercontent.com/93121277/170496363-a214aed9-4607-48dd-aded-eaabcbabec85.png)
+![rice9](https://user-images.githubusercontent.com/93121277/170500356-b3f9f70f-e2ae-4476-9bae-98b6d701388c.png)
+![rice10](https://user-images.githubusercontent.com/93121277/170500366-cdab063c-7c47-419c-9f68-28a8b42934cd.png)
 
 
