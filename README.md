@@ -525,10 +525,9 @@ Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = c("Chr01","Chr02","Chr03","
 ![pvalueSIG](https://user-images.githubusercontent.com/93121277/170471126-2f31504b-e067-4992-8e6d-48b802a2387c.png)
 
 
-![Screenshot from 2022-04-01 15-45-06](https://user-images.githubusercontent.com/93121277/161276197-a4378a1e-7437-40c9-8180-5619bedd2abe.png)
+![slice](https://user-images.githubusercontent.com/93121277/170484889-031979b7-3ff9-4845-842f-415f8639fbd0.png)
 
 
-![Screenshot from 2022-04-01 15-44-36](https://user-images.githubusercontent.com/93121277/161276189-686eadae-e152-472e-9c6d-034bb58b25f7.png)
 
 
 # Assuming average sequencing coverage expected values for n1,n2,n3,n4
