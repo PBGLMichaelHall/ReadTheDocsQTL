@@ -227,7 +227,6 @@ base::setwd("/home/michael/Desktop/QTLseqr/extdata")
 QTLseqr::importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt",lowBulk = "D2_F2_TT",chromList = c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10"),filename = "Hall",filter=TRUE)
 
 ```
-![importVCF](https://user-images.githubusercontent.com/93121277/165956202-7ea2d997-6506-4e66-a1da-4e0510736c7e.png)
 
 # The header of the .CSV file reveals 7,763 variant entries and a total of 16 columns. This file is used in the next step when importFromTable function is invoked.
 
@@ -258,7 +257,6 @@ df <-
 
 ```
 
-![removing](https://user-images.githubusercontent.com/93121277/165956524-43fb8aca-c6c1-4f35-ba99-863bbcee0e50.png)
 
 
 
@@ -346,7 +344,6 @@ df_filt<-QTLseqr::runGprimeAnalysis(
   outlierFilter = "deltaSNP",
   filterThreshold = 0.1)
 ```
-![Screenshot from 2022-04-01 08-31-03](https://user-images.githubusercontent.com/93121277/161207885-45119458-fa34-4259-80be-a8cd2f30fb3c.png)
 
 # G' Distribution Plot
 ```r
@@ -371,7 +368,7 @@ QTLseqr::plotGprimeDist(SNPset = df_filt, outlierFilter = "deltaSNP",filterThres
 ```r 
 
 #Run QTLseq analysis
-df_filt2 <- QTLseqr::runQTLseqAnalysis(
+df_filt <- QTLseqr::runQTLseqAnalysis(
   SNPset = df_filt,
   windowSize = 5000000,
   popStruc = "F2",
@@ -381,13 +378,12 @@ df_filt2 <- QTLseqr::runQTLseqAnalysis(
 )
 
 ```
-![Screenshot from 2022-04-01 08-39-28](https://user-images.githubusercontent.com/93121277/161209279-3bd76a3c-97d4-44f0-801d-c5c3e7ba1942.png)
 
 
 # Plot G Statistic Distribution
 
 ```r
-graphics::hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Histogram of G Values")
+graphics::hist(df_filt$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Histogram of G Values")
 ```
 
 ![Screenshot from 2022-04-01 08-44-38](https://user-images.githubusercontent.com/93121277/161209927-59cd31d5-5663-4d0b-9d7d-ae6ee64a180d.png)
@@ -396,7 +392,7 @@ graphics::hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",ma
 
 ```r
 #Plot Snps as a function of chromosome and position values
-QTLseqr::plotQTLStats(SNPset = df_filt2, var = "nSNPs")
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "nSNPs")
 ggplot2::ggsave(filename = "nSNPs.png",plot = last_plot())
 ```
 ![Screenshot from 2022-04-01 15-20-34](https://user-images.githubusercontent.com/93121277/161271810-6709f553-1361-4f4d-a6f4-3f11eca4a8c9.png)
@@ -412,7 +408,7 @@ ggplot2::ggsave(filename = "GPrime.png",plot = last_plot())
 
 ```r
 #Again using plotQTLStats change second argument varaible to deltaSNP and plot.
-QTLseqr::plotQTLStats(SNPset = df_filt2, var = "deltaSNP", plotIntervals  = TRUE)
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "deltaSNP", plotIntervals  = TRUE)
 ggplot2::ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
 ```
 
@@ -420,7 +416,7 @@ ggplot2::ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
 
 ```r
 #Finally with plotQTLStats plot negLog10Pval
-QTLseqr::plotQTLStats(SNPset = df_filt2, var = "negLog10Pval",plotThreshold = TRUE,q=0.01)
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "negLog10Pval",plotThreshold = TRUE,q=0.01)
 ggplot2::ggsave(filename = "negLog10Pval.png",plot = last_plot())
 ```
 ![Screenshot from 2022-04-01 15-22-41](https://user-images.githubusercontent.com/93121277/161272116-144fb1c9-78a1-4c7c-9a7c-96b1a1e0b664.png)
@@ -429,7 +425,7 @@ ggplot2::ggsave(filename = "negLog10Pval.png",plot = last_plot())
 ```r
 #Add subset argument to focus on particular chromosomes one, three, four, and six.
 #The reason is due to signficant QTL regions
-QTLseqr::plotQTLStats(SNPset = df_filt2, var = "Gprime",plotThreshold = TRUE,q=0.01,subset = c("Chr01","Chr03","Chr04","Chr06"))
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "Gprime",plotThreshold = TRUE,q=0.01,subset = c("Chr01","Chr03","Chr04","Chr06"))
 
 ```
 ![Screenshot from 2022-04-01 15-24-01](https://user-images.githubusercontent.com/93121277/161272349-3c9bcf3e-553c-43a5-af5d-6b1e80e99658.png)
@@ -656,12 +652,12 @@ df_filt <-
     minTotalDepth = 100,
     maxTotalDepth = 400,
     minSampleDepth = 40,
-    #    minGQ = 0
+       minGQ = 99,
+       verbose = TRUE
   )
   
   ```
   
-  ![Screenshot from 2022-04-01 09-54-07](https://user-images.githubusercontent.com/93121277/161220139-0c079197-99db-4292-949a-cd23d0e2e7c7.png)
 
 
 ```r
@@ -674,7 +670,6 @@ df_filt<- QTLseqr::runGprimeAnalysis(
 
 
 ```
-![Screenshot from 2022-04-01 09-54-50](https://user-images.githubusercontent.com/93121277/161220373-00be3d7e-b67d-44ca-a1af-5c4670751f39.png)
 
 
 ```r
@@ -691,7 +686,6 @@ df_filt2 <- QTLseqr::runQTLseqAnalysis(
 )
 
 ```
-![Screenshot from 2022-04-01 09-56-09](https://user-images.githubusercontent.com/93121277/161220504-ba5f8e90-126f-4ee7-9a1d-06d5e09e6a94.png)
 
 # Plot G Statistic Distribution
 ```r
