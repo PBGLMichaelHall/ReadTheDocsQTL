@@ -301,6 +301,27 @@ ggplot(data = df) + geom_histogram(aes(x = DP.HIGH))
 
 ![dpHigh](https://user-images.githubusercontent.com/93121277/170449550-d4fbe07f-aff3-4b5e-b514-96afb13d9892.png)
 
+
+```r
+
+ggplot(data = df) + geom_histogram(aes(x = GQ.LOW))
+
+```
+
+
+![GQlow](https://user-images.githubusercontent.com/93121277/170449603-9ce8d582-f2b6-4550-8a86-7fed616fc962.png)
+
+
+```r
+
+ggplot(data = df) + geom_histogram(aes(x = GQ.HIGH))
+
+```
+
+![GQHigh](https://user-images.githubusercontent.com/93121277/170449502-f0833ddc-85cb-465c-928b-5a6013ddeee8.png)
+
+
+
 ``` r 
 
 #Filter SNPs based on some criteria
@@ -477,11 +498,26 @@ Obs_Allele_Freq(SNPSet = df_filt, size = .001)
 
 ![Screenshot from 2022-04-01 12-38-33](https://user-images.githubusercontent.com/93121277/161247921-2fab6d12-6b11-433a-af3b-a5c969aabc8a.png)
 
+# Filter the SNP set for significant P-values with respect to G Prime Statistics
+
+```r
+
+ggplot2::ggplot(data = df_filt, mapping = ggplot2::aes(x = pvalue)) + ggplot2::geom_histogram(bins = 100)
+ggplot2::ggplot(data = df_filt, mapping= ggplot2::aes(x = pvalue)) + ggplot2::geom_density()
+df_filt2 <- df_filt %>% dplyr::filter(pvalue < 0.05)
+# After filtering only 96 Variants remain
+base::plot(df_filt2$pvalue, pch = 20, col = "blue", xlab = "index", ylab = "pvalue")
+
+```
+
+![hist](https://user-images.githubusercontent.com/93121277/170462211-f2848b2e-40a0-412b-8b28-dc07f94df1aa.png)
+![density](https://user-images.githubusercontent.com/93121277/170462221-aa24e5f0-4838-4738-8054-eb797ef452d0.png)
+![pvalue](https://user-images.githubusercontent.com/93121277/170462231-2b7cba53-3ac7-4d3a-9d5d-353628be1196.png)
 
 
 ``` r
 ##Use the function to investigate chromosomal region of interest
-Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = "Chr04", threshold = .90)
+Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = c("Chr01","Chr02","Chr03","Chr04","Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", threshold = 0, pvalueThresh = 0.05)
 ```
 
 
@@ -786,23 +822,11 @@ dev.off()
 
 
 
-![GQlow](https://user-images.githubusercontent.com/93121277/170449603-9ce8d582-f2b6-4550-8a86-7fed616fc962.png)
-
-
-
-
-
-![GQHigh](https://user-images.githubusercontent.com/93121277/170449502-f0833ddc-85cb-465c-928b-5a6013ddeee8.png)
-
-
 
 ![new](https://user-images.githubusercontent.com/93121277/170455852-49ff3597-182f-4877-846d-78571c201ea4.png)
 
 ![save](https://user-images.githubusercontent.com/93121277/170457107-f8f9b2ef-5396-483f-9a13-a69c86f1fe25.png)
 
-![hist](https://user-images.githubusercontent.com/93121277/170462211-f2848b2e-40a0-412b-8b28-dc07f94df1aa.png)
-![density](https://user-images.githubusercontent.com/93121277/170462221-aa24e5f0-4838-4738-8054-eb797ef452d0.png)
-![pvalue](https://user-images.githubusercontent.com/93121277/170462231-2b7cba53-3ac7-4d3a-9d5d-353628be1196.png)
 
 ![pvalueSIG](https://user-images.githubusercontent.com/93121277/170471126-2f31504b-e067-4992-8e6d-48b802a2387c.png)
 ![screen](https://user-images.githubusercontent.com/93121277/170471567-cbb92c0d-8d96-4777-afa8-d4184ffa2350.png)
