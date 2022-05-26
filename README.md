@@ -789,5 +789,8 @@ dev.off()
 
 ![save](https://user-images.githubusercontent.com/93121277/170457107-f8f9b2ef-5396-483f-9a13-a69c86f1fe25.png)
 
+![hist](https://user-images.githubusercontent.com/93121277/170462211-f2848b2e-40a0-412b-8b28-dc07f94df1aa.png)
+![density](https://user-images.githubusercontent.com/93121277/170462221-aa24e5f0-4838-4738-8054-eb797ef452d0.png)
+![pvalue](https://user-images.githubusercontent.com/93121277/170462231-2b7cba53-3ac7-4d3a-9d5d-353628be1196.png)
 
 
