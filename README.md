@@ -788,7 +788,7 @@ QTLseqr::getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = 
 # Filter Allelic Depth Frequencies, prefer 85% or greater.
 ```r
 
-QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt2, ChromosomeValue = "NC_029263.1", threshold = 0, pvalueThresh = 0.05)
+ QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt2, ChromosomeValue = Chroms, threshold = .80, pvalueThresh = 0.05)
 
 
 ```
@@ -796,5 +796,6 @@ QTLseqr::Obs_Allele_Freq2(SNPSet = df_filt2, ChromosomeValue = "NC_029263.1", th
 # Preview the plot with idenitfied SNP positions
 
 
+![ricedd](https://user-images.githubusercontent.com/93121277/170496363-a214aed9-4607-48dd-aded-eaabcbabec85.png)
 
 
