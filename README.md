@@ -353,13 +353,13 @@ df_filt<-QTLseqr::runGprimeAnalysis(
 ```r
 #The plot reveals a skewed G Prime statistic with a really small variance. Perhaps it is due to the small number of variants called.
 #In addition, Hampels outlier filter in the second argument, can also be changed to "deltaSNP"
-plotGprimeDist(SNPset = df_filt, outlierFilter = "Hampel")
+QTLseqr::plotGprimeDist(SNPset = df_filt, outlierFilter = "Hampel")
 ```
 ![Screenshot from 2022-04-01 08-53-51](https://user-images.githubusercontent.com/93121277/161211346-780ed554-5fa6-4d22-bada-d446714c06aa.png)
 
 ```r
 #We can see raw data before and after our filtering step
-plotGprimeDist(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.1)
+QTLseqr::plotGprimeDist(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.1)
 ```
 ![Screenshot from 2022-04-01 08-59-04](https://user-images.githubusercontent.com/93121277/161212125-9daf552a-ddb1-4a50-8603-08adbf21a869.png)
 
