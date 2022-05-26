@@ -497,6 +497,8 @@ Obs_Allele_Freq(SNPSet = df_filt, size = .001)
 ```
 
 ![Screenshot from 2022-04-01 12-38-33](https://user-images.githubusercontent.com/93121277/161247921-2fab6d12-6b11-433a-af3b-a5c969aabc8a.png)
+![slice](https://user-images.githubusercontent.com/93121277/170481262-38cd9ba6-3c6f-4a6c-b36e-474992033fc4.png)
+
 
 # Filter the SNP set for significant P-values with respect to G Prime Statistics
 
@@ -520,7 +522,7 @@ base::plot(df_filt2$pvalue, pch = 20, col = "blue", xlab = "index", ylab = "pval
 Obs_Allele_Freq2(SNPSet = df_filt, ChromosomeValue = c("Chr01","Chr02","Chr03","Chr04","Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", threshold = 0, pvalueThresh = 0.05)
 ```
 
-
+![pvalueSIG](https://user-images.githubusercontent.com/93121277/170471126-2f31504b-e067-4992-8e6d-48b802a2387c.png)
 
 
 ![Screenshot from 2022-04-01 15-45-06](https://user-images.githubusercontent.com/93121277/161276197-a4378a1e-7437-40c9-8180-5619bedd2abe.png)
@@ -828,7 +830,6 @@ dev.off()
 ![save](https://user-images.githubusercontent.com/93121277/170457107-f8f9b2ef-5396-483f-9a13-a69c86f1fe25.png)
 
 
-![pvalueSIG](https://user-images.githubusercontent.com/93121277/170471126-2f31504b-e067-4992-8e6d-48b802a2387c.png)
+
 ![screen](https://user-images.githubusercontent.com/93121277/170471567-cbb92c0d-8d96-4777-afa8-d4184ffa2350.png)
-![slice](https://user-images.githubusercontent.com/93121277/170481262-38cd9ba6-3c6f-4a6c-b36e-474992033fc4.png)
 
