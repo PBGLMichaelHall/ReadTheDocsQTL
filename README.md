@@ -845,9 +845,6 @@ user-images.githubusercontent.com/93121277/170![mansfield](https://user-images.g
 
 
 
-![mansfield](https://user-images.githubusercontent.com/93121277/170514666-fe916573-d652-416b-a6e3-c1828f67a0c5.png)
-
-
 
 
 
