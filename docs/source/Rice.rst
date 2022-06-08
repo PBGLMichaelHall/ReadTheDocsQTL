@@ -419,7 +419,7 @@ nSNPs
    plotQTLStats(SNPset = df_filt2, var = "nSNPs")
    ggsave(filename = "nSNPs.png",plot = last_plot())
 
-.. figure:: ../images/73.png
+.. figure:: ../images/snp.png
    :alt: 
 
 Gprime
