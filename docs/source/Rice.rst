@@ -380,7 +380,7 @@ runQTLseqAnalysis_MH
    
 
    #Run QTLseq analysis
-   df_filt2 <- runQTLseqAnalysis(
+   df_filt <- runQTLseqAnalysis(
      SNPset = df_filt,
      windowSize = 1e6,
      popStruc = "F2",
@@ -399,7 +399,7 @@ Plot G Statistic Distribution as a Histogram
 
 .. code:: r
 
-   hist(df_filt2$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Histogram of G Values")
+   hist(df_filt$G,breaks = 950,xlim = c(0,10),xlab = "G Distribution",main = "Histogram of G Values")
 
 .. figure:: ../images/72.png
    :alt:
@@ -416,7 +416,7 @@ nSNPs
 
    #Plot Snps as a function of chromosome and position values
    
-   plotQTLStats(SNPset = df_filt2, var = "nSNPs")
+   plotQTLStats(SNPset = df_filt, var = "nSNPs")
    ggsave(filename = "nSNPs.png",plot = last_plot())
 
 .. figure:: ../images/snp.png
@@ -443,7 +443,7 @@ deltaSNP
 
    #Again using plotQTLStats change second argument varaible to deltaSNP and plot.
    
-   plotQTLStats(SNPset = df_filt2, var = "deltaSNP", plotIntervals  = TRUE)
+   plotQTLStats(SNPset = df_filt, var = "deltaSNP", plotIntervals  = TRUE)
    ggsave(filename = "DeltaSNPInterval.png",plot = last_plot())
 
 .. figure:: ../images/75.png
