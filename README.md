@@ -27,7 +27,6 @@ https://qtl-bsa.readthedocs.io/en/latest/Sorghum.html
 # plotQTLStats_MH
 
 
-
 ```r
 
 QTLseqr::plotQTLStats_MH(SNPset = df_filt2, var = "Gprime", plotThreshold = TRUE, q = 0.01)
@@ -118,6 +117,7 @@ QTLseqr::AlleleFreqSlidingWindow(vcf = "SNPS_ONLY.freebayes_D2.filtered.vcf.gz",
 
 ```
 ![plot](https://user-images.githubusercontent.com/93121277/168237187-1960c835-acee-4e12-bffd-1c96612681eb.png)
+
 
 
 
@@ -832,10 +832,9 @@ QTLseqr::getQTLTable(SNPset = df_filt2, alpha = 0.01, export = TRUE, fileName = 
 
 
 ![ricedd](https://user-images.githubusercontent.com/93121277/170496363-a214aed9-4607-48dd-aded-eaabcbabec85.png)
-![rice9](https://user-images.githubusercontent.com/93121277/170500356-b3f9f70f-e2ae-4476-9bae-98b6d701388c.png)
-![rice10](https://user-images.githubusercontent.com/93121277/170500366-cdab063c-7c47-419c-9f68-28a8b42934cd.png)
 
-![preview7](https://user-images.githubusercontent.com/93121277/170502030-4c652f70-a09b-48f8-af48-44f7e4eafe8d.png)
+
+
 
 
 
