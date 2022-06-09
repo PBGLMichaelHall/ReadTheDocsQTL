@@ -1,0 +1,135 @@
+#install devtools and all other dependent packages first
+utils::install.packages("devtools")
+utils::install.packages("tidyr")
+utils::install.packages("ggplot2")
+utils::install.packages("dplyr")
+utils::install.packages("data.table")
+utils::install.packages("vcfR")
+
+
+#use devtools to install QTLseqr from my "Forked" Repository at PBGL
+devtools::install_github("PBGLMichaelHall/QTLseqr")
+
+#Load them into your session so they are available for use
+base::library("QTLseqr")
+base::library("data.table")
+base::library("dplyr")
+base::library("tidyr")
+base::library("vcfR")
+base::library("ggplot2")
+
+
+
+
+
+QTLseqr::importFromVCF(file="wGQ-Filt-freebayes~bwa~IRGSP-1.0~both-segregant_bulks~filtered-default.vcf", 
+highBulk = "ET-pool-385", lowBulk ="ES-pool-430",chromList =c("NC_029256.1","NC_029257.1","NC_029258.1",
+"NC_029259.1","NC_029260.1","NC_029261.1","NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1",
+"NC_029266.1","NC_029267.1"),filename = "Hall",filter=FALSE)
+
+
+
+
+HighBulk <- "ET-pool-385"
+LowBulk <- "ES-pool-430"
+file <- "Hall.csv"
+
+#Choose which chromosomes/contigs will be included in the analysis,
+
+chromList <- c("NC_029256.1","NC_029257.1","NC_029258.1","NC_029259.1","NC_029260.1","NC_029261.1",
+"NC_029262.1","NC_029263.1","NC_029264.1","NC_029265.1","NC_029266.1","NC_029267.1")
+
+df <-
+  QTLseqr::importFromTable(
+    file = file,
+    highBulk = HighBulk,
+    lowBulk = LowBulk,
+    chromList = chromList,
+    sep = ","
+  ) 
+
+
+
+
+
+
+ggplot(data = df) + geom_histogram(aes(x = DP.LOW)) + xlim(0,300)
+
+ggplot(data = df) + geom_histogram(aes(x = DP.HIGH)) + xlim(0,300)
+
+ggplot(data = df) + geom_histogram(aes(x = DP.LOW + DP.HIGH)) + xlim(0,400)
+
+ggplot(data = df) + geom_histogram(aes(x =  abs(DP.HIGH - DP.LOW))) + xlim(0, 200)
+
+ggplot(data = df) + geom_histogram(aes(x = REF_FRQ))
+
+ggplot(data = df) + geom_histogram(aes(x = GQ.LOW))
+
+ggplot(data = df) + geom_histogram(aes(x = GQ.HIGH))
+
+ggplot(data = df) + geom_histogram(aes(x = SNPindex.HIGH))
+
+
+
+
+
+#Filter SNPs based on some criteria
+df_filt <-
+  QTLseqr::filterSNPs(
+    SNPset = df,
+    refAlleleFreq = 0.20,
+    minTotalDepth = 100,
+    maxTotalDepth = 400,
+    depthDifference = 100,
+    minSampleDepth = 40,
+             minGQ = 99,
+    verbose = TRUE
+  )
+
+
+
+
+
+#Run G' analysis
+df_filt<-QTLseqr::runGprimeAnalysis(
+  SNPset = df_filt,
+  windowSize = 1e6,
+  outlierFilter = "deltaSNP",
+  filterThreshold = 0.1)
+
+
+
+#Run QTLseq analysis
+df_filt <- QTLseqr::runQTLseqAnalysis(
+  SNPset = df_filt,
+  windowSize = 1e6,
+  popStruc = "F2",
+  bulkSize = c(385, 430),
+  replications = 10000,
+  intervals = c(95, 99)
+)
+
+
+
+
+QTLseqr::plotGprimeDist(SNPset = df_filt, outlierFilter = "Hampel")
+
+QTLseqr::plotGprimeDist(SNPset = df_filt, outlierFilter = "deltaSNP",filterThreshold = 0.1)
+
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "nSNPs")
+
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "Gprime", plotThreshold = TRUE, q = 0.01)
+
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "deltaSNP", plotIntervals  = TRUE)
+
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "negLog10Pval",plotThreshold = TRUE,q=0.01,
+                      subset = c("NC_029256.1","NC_029257.1","NC_029263.1","NC_029265.1"))
+
+QTLseqr::plotQTLStats(SNPset = df_filt, var = "Gprime",plotThreshold = TRUE,q=0.01,
+                      subset = c("NC_029256.1","NC_029257.1","NC_029263.1","NC_029265.1"))
+
+QTLseqr::getQTLTable(SNPset = df_filt, alpha = 0.01, export = TRUE, fileName = "my_BSA_QTL.csv")
+
+
+
+
